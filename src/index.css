@@ -1,0 +1,517 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Manrope Variable', Manrope, ui-sans-serif, system-ui, sans-serif;
+  color: #edf4f1;
+  background: #051513;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #051513;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  color: #051513;
+  background: #9be7c5;
+}
+
+:focus-visible {
+  outline: 2px solid #9be7c5;
+  outline-offset: 4px;
+}
+
+.light-section :focus-visible {
+  outline-color: #17614f;
+}
+
+@layer components {
+  .skip-link {
+    @apply fixed left-4 top-3 z-[100] -translate-y-24 rounded-lg bg-mint-300 px-4 py-3 text-sm font-bold text-ink-900 shadow-xl transition-transform focus:translate-y-0;
+  }
+
+  .feature-card {
+    @apply transition-all duration-300;
+  }
+
+  .feature-card:hover {
+    @apply -translate-y-1 border-mint-300/20 bg-[#0b2320];
+    box-shadow: 0 24px 55px -35px rgba(0, 0, 0, 0.8);
+  }
+
+  .feature-icon {
+    @apply flex h-11 w-11 items-center justify-center rounded-xl border border-mint-300/20 bg-mint-300/[0.07] text-mint-300 transition-colors duration-300;
+  }
+
+  .feature-card:hover .feature-icon {
+    @apply border-mint-300/35 bg-mint-300/[0.11];
+  }
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.hero-grid {
+  background:
+    radial-gradient(circle at 14% 24%, rgba(112, 214, 172, 0.04), transparent 30%),
+    linear-gradient(180deg, #071b19 0%, #051513 100%);
+}
+
+.fine-grid {
+  background-image:
+    linear-gradient(rgba(155, 231, 197, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(155, 231, 197, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+}
+
+/* Motion Prompt #001-024 · MIT License (c) 2026 Shohei Ohtaki · https://showheyohtaki.github.io/motion-prompt/#001 */
+/* Motion Prompt #005 · MIT License (c) 2026 Shohei Ohtaki · https://showheyohtaki.github.io/motion-prompt/#005 */
+/* CSS port: original 120px / 60px masked paths, quintic ease-out, and divider timings. */
+.motion-mask-frame {
+  position: relative;
+  overflow: hidden;
+}
+
+.motion-mask-top-text {
+  animation: motion-mask-top 0.65s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.motion-mask-bottom-text {
+  animation: motion-mask-bottom 0.6s 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.motion-mask-divider {
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+  top: calc(50% - 3px);
+  left: 0;
+  width: min(380px, 85%);
+  height: 6px;
+  border-radius: 999px;
+  background: #9be7c5;
+  transform: scaleX(0);
+  transform-origin: center;
+  animation:
+    motion-mask-line-grow 0.4s 0.1s cubic-bezier(0.65, 0, 0.35, 1) both,
+    motion-mask-line-shrink 0.25s 2.05s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes motion-mask-top {
+  from { transform: translateY(120px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes motion-mask-bottom {
+  from { transform: translateY(-60px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes motion-mask-line-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes motion-mask-line-shrink {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+.hero-enter {
+  animation: hero-enter 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.preview-enter {
+  animation: preview-enter 0.9s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.faq-enter {
+  animation: faq-enter 0.22s ease-out both;
+}
+
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes preview-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes faq-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-scroll-copy,
+.hero-scroll-visual,
+.hero-parallax-grid,
+.hero-scroll-orb {
+  will-change: transform, opacity;
+}
+
+.hero-scroll-copy {
+  opacity: calc(1 - (var(--hero-scroll, 0) * 0.42));
+  transform: translate3d(0, calc(var(--hero-scroll, 0) * -34px), 0);
+}
+
+.hero-scroll-visual {
+  transform: translate3d(0, calc(var(--hero-scroll, 0) * 64px), 0)
+    scale(calc(1 + (var(--hero-scroll, 0) * 0.035)));
+  transform-origin: center top;
+}
+
+.hero-parallax-grid {
+  transform: translate3d(0, calc(var(--hero-scroll, 0) * 90px), 0);
+}
+
+.hero-scroll-orb {
+  transform: translate3d(calc(var(--hero-scroll, 0) * 45px), calc(var(--hero-scroll, 0) * 70px), 0);
+}
+
+[data-reveal=''] {
+  opacity: 0;
+}
+
+[data-reveal='visible'] {
+  animation: scroll-reveal 0.95s var(--reveal-delay, 0ms) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes scroll-reveal {
+  from {
+    opacity: 0;
+    translate: 0 42px;
+    clip-path: inset(0 0 14% 0);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.workflow-scroll {
+  --workflow-progress: 0;
+  position: relative;
+}
+
+.workflow-sticky,
+.workflow-viewport,
+.workflow-panel,
+.workflow-art {
+  min-width: 0;
+}
+
+.workflow-chrome {
+  display: none;
+}
+
+.workflow-track {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workflow-panel-card {
+  position: relative;
+  display: grid;
+  gap: 2rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(155, 231, 197, 0.045), transparent 32%),
+    #091f1c;
+  padding: 1.5rem;
+}
+
+.workflow-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.workflow-art {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workflow-ghost-number {
+  pointer-events: none;
+  position: absolute;
+  right: -0.03em;
+  bottom: -0.25em;
+  color: transparent;
+  font-size: clamp(10rem, 24vw, 19rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.09em;
+  -webkit-text-stroke: 1px rgba(155, 231, 197, 0.055);
+  user-select: none;
+}
+
+.workflow-progress-line {
+  transform: scaleX(var(--workflow-progress, 0));
+  transform-origin: left;
+}
+
+.runtime-stack::before {
+  content: '';
+  position: absolute;
+  inset: 15% 12%;
+  border-radius: 999px;
+  background: rgba(112, 214, 172, 0.08);
+  filter: blur(45px);
+}
+
+.runtime-layer-front,
+.runtime-layer-back,
+.runtime-layer-middle,
+.team-card,
+.oversight-scene {
+  transform-origin: center;
+}
+
+.runtime-orbit {
+  transform: rotate(calc(var(--workflow-progress, 0) * 140deg));
+  transform-origin: center;
+}
+
+.team-card,
+.runtime-layer-front,
+.oversight-scene {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.team-card-2 {
+  transition-delay: 60ms;
+}
+
+.team-card-3 {
+  transition-delay: 120ms;
+}
+
+@media (min-width: 640px) {
+  .workflow-panel-card {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .workflow-panel-card {
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    align-items: center;
+    gap: 2.5rem;
+    padding: 2.5rem;
+  }
+
+  .workflow-copy {
+    align-self: stretch;
+  }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .workflow-scroll {
+    height: 280vh;
+  }
+
+  .workflow-sticky {
+    position: sticky;
+    top: 76px;
+    display: flex;
+    height: calc(100vh - 76px);
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .workflow-chrome {
+    display: flex;
+  }
+
+  .workflow-viewport {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    overflow: hidden;
+    perspective: 1600px;
+  }
+
+  .workflow-track {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 1.5rem;
+    will-change: transform;
+  }
+
+  .workflow-panel {
+    flex: 0 0 100%;
+  }
+
+  .workflow-panel-card {
+    height: calc(100vh - 190px);
+    min-height: 420px;
+    max-height: 580px;
+    gap: 3rem;
+    padding: 2.5rem;
+    transform: scale(0.97) rotateY(1.25deg);
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.8s ease;
+  }
+
+  .workflow-panel.is-active .workflow-panel-card {
+    border-color: rgba(155, 231, 197, 0.18);
+    transform: scale(1) rotateY(0);
+  }
+
+  .workflow-panel .runtime-layer-front {
+    transform: translateY(18px) rotate(-1.5deg);
+  }
+
+  .workflow-panel.is-active .runtime-layer-front {
+    transform: translateY(0) rotate(0);
+  }
+
+  .workflow-panel .team-card {
+    transform: translateX(34px) rotate(1.5deg);
+  }
+
+  .workflow-panel.is-active .team-card {
+    transform: translateX(0) rotate(0);
+  }
+
+  .workflow-panel .oversight-scene {
+    transform: translateY(22px) scale(0.97);
+  }
+
+  .workflow-panel.is-active .oversight-scene {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  .workflow-panel-card {
+    padding: 3rem;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #071b19;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid #071b19;
+  border-radius: 999px;
+  background: #294a42;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e685c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .feature-card:hover,
+  .group:hover .group-hover\:translate-x-1,
+  .group:hover .group-hover\:translate-y-0\.5 {
+    transform: none;
+  }
+
+  .scroll-progress,
+  .motion-mask-divider {
+    display: none;
+  }
+
+  .hero-scroll-copy,
+  .hero-scroll-visual,
+  .hero-parallax-grid,
+  .hero-scroll-orb,
+  .motion-mask-top-text,
+  .motion-mask-bottom-text,
+  .workflow-track,
+  .workflow-panel-card,
+  .runtime-layer-front,
+  .runtime-orbit,
+  .team-card,
+  .oversight-scene {
+    opacity: 1;
+    transform: none;
+    translate: none;
+    will-change: auto;
+  }
+
+  [data-reveal=''],
+  [data-reveal='visible'] {
+    opacity: 1;
+    animation: none;
+    clip-path: none;
+    translate: none;
+  }
+}
