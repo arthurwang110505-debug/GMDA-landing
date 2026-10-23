@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">GMDA</title>
+  <desc id="desc">A mint geometric G with four connected agent nodes on a dark teal tile.</desc>
+  <defs>
+    <linearGradient id="tile" x2="1" y2="1">
+      <stop stop-color="#132e31"/>
+      <stop offset="1" stop-color="#07191d"/>
+    </linearGradient>
+    <linearGradient id="mark" x2="0.8" y2="1">
+      <stop stop-color="#a7f3d0"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#tile)"/>
+  <path d="M704 332H404L296 440v192l108 108h300V520H528" fill="none" stroke="url(#mark)" stroke-width="88" stroke-linejoin="round" stroke-linecap="square"/>
+  <g fill="#f0fdfa">
+    <circle cx="296" cy="440" r="26"/>
+    <circle cx="404" cy="740" r="26"/>
+    <circle cx="704" cy="740" r="26"/>
+    <circle cx="704" cy="332" r="26"/>
+  </g>
+</svg>
