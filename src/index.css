@@ -278,13 +278,7 @@ button {
 }
 .hero-mascot-interaction:hover::before { opacity: 1; transform: scale(1) rotate(0); }
 
-.hero-mascot img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 9px 9px rgba(0, 0, 0, 0.22));
-  user-select: none;
-}
+
 
 .hero-mascot-mori {
   --mascot-rotate: -8deg;
@@ -783,7 +777,7 @@ button {
   display: block;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 9px 9px rgba(0, 0, 0, 0.18));
+  filter: drop-shadow(0 10px 10px rgba(28, 22, 48, 0.13));
   user-select: none;
 }
 
