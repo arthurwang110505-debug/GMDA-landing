@@ -87,7 +87,7 @@ export const previewAgents: PreviewAgent[] = [
     initials: 'SO',
     role: 'Product writer',
     model: 'Writing profile',
-    avatarClass: 'bg-[#FFFFFF] text-[#14142B]',
+    avatarClass: 'border border-line/10 bg-[#FFFFFF] text-[#14142B]',
     userMessage: 'Draft a concise launch announcement from the approved brief.',
     agentMessage:
       'The draft is ready. I kept the rollout language measured and marked two product claims for your review before anything is shared.',

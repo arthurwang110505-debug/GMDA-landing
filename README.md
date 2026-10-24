@@ -53,13 +53,18 @@ The included `vercel.json` also declares the framework, install command, build c
 - `src/components/ScrollProgress.tsx` — lightweight page reading-progress indicator
 - `src/components/Faq.tsx` — accessible FAQ accordion
 - `src/hooks/useScrollMotion.ts` — requestAnimationFrame scroll motion and IntersectionObserver reveals
+- `src/hooks/useTheme.ts` — light/dark theme state, browser chrome, and local persistence
 - `src/data/preview.ts` — all sample agents, messages, tasks, and approvals
-- `src/index.css` — Tailwind layers, motion, focus states, and decorative grids
+- `src/index.css` — semantic theme tokens, Tailwind layers, motion, focus states, and decorative grids
 - `public/app-icon.svg` — official GMDA ink app icon from the GMDA brand kit
 
 ## Brand palette
 
 The page follows the GMDA brand starter: **Ink `#14142B`** for surfaces and text, **Ink Soft `#2A2A55`** for dark UI layers, **Spark Lime `#C8F23C`** for accents and buttons with Ink text, **Paper `#F5F3EC`** for light sections, **Cloud White `#FFFFFF`**, and **Blush `#FF8F73`** as a restrained warm accent. Brand surfaces are flat rather than gradient or glow effects, and lime is not used for text on Paper.
+
+## Light and dark themes
+
+The header toggle switches every page section, product illustration, workflow scene, and navigation surface between Ink dark mode and Paper/Cloud White light mode. Dark mode is the default. The choice is stored locally as `gmda-theme` and applied before React renders to avoid a theme flash; no account or tracking is involved. Text accents use Ink in light mode rather than low-contrast lime on Paper.
 
 ## Accessibility and privacy
 

@@ -1,21 +1,35 @@
 import type { Config } from 'tailwindcss'
 
+const themeColor = (name: string) => `rgb(var(--${name}) / <alpha-value>)`
+
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        // GMDA brand starter: Ink, Spark Lime, Paper, Cloud White,
-        // Ink Soft, and Blush. Slate steps are neutral Ink tints for text.
+        // Semantic colors switch with data-theme. Brand Ink, Spark Lime,
+        // Paper, Cloud White, and Blush remain fixed GMDA colors.
+        primary: themeColor('color-primary'),
+        accent: themeColor('color-accent'),
+        line: themeColor('color-line'),
+        surface: {
+          page: themeColor('surface-page'),
+          card: themeColor('surface-card'),
+          layer: themeColor('surface-layer'),
+        },
+        approval: {
+          DEFAULT: themeColor('color-approval'),
+          accent: themeColor('color-approval-accent'),
+        },
         slate: {
-          50: '#FFFFFF',
-          100: '#F5F3EC',
-          200: '#E8E6EF',
-          300: '#D2CFDE',
-          400: '#B9B5C9',
-          500: '#AAA5BC',
-          600: '#A49FB8',
-          700: '#77728D',
+          50: themeColor('slate-50'),
+          100: themeColor('slate-100'),
+          200: themeColor('slate-200'),
+          300: themeColor('slate-300'),
+          400: themeColor('slate-400'),
+          500: themeColor('slate-500'),
+          600: themeColor('slate-600'),
+          700: themeColor('slate-700'),
           800: '#2A2A55',
           900: '#14142B',
           950: '#14142B',

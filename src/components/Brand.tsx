@@ -16,7 +16,7 @@ export function Brand({ compact = false, light = false }: BrandProps) {
       <span className="flex flex-col">
         <span
           className={`font-mono text-[1.05rem] font-medium tracking-[0.2em] ${
-            light ? 'text-ink-900' : 'text-white'
+            light ? 'text-ink-900' : 'text-primary'
           }`}
         >
           GMDA
