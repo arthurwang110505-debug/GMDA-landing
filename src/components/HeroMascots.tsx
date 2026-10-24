@@ -81,7 +81,7 @@ function Creature({ kind }: { kind: CreatureKind }) {
         {kind === 'koda' && <path d="M59 50 H80" stroke="#fff" strokeWidth="4" strokeLinecap="round" opacity=".7"/>}
         {kind === 'milo' && <path d="M51 65 Q60 49 76 49" stroke="#fff" strokeWidth="4" strokeLinecap="round" opacity=".8"/>}
         <g className="creature-eyes" fill="#29233e">
-          {kind === 'koda' ? <><ellipse cx="65" cy="78" rx="5" ry="7"/><ellipse cx="96" cy="78" rx="5" ry="7/></> : <><ellipse cx="64" cy={kind === 'milo' ? 78 : 81} rx="5" ry="7"/><ellipse cx="96" cy={kind === 'milo' ? 78 : 81} rx="5" ry="7/></>}
+          {kind === 'koda' ? <><ellipse cx="65" cy="78" rx="5" ry="7"/><ellipse cx="96" cy="78" rx="5" ry="7"/></> : <><ellipse cx="64" cy={kind === 'milo' ? 78 : 81} rx="5" ry="7"/><ellipse cx="96" cy={kind === 'milo' ? 78 : 81} rx="5" ry="7"/></>}
         </g>
         <circle cx="62" cy="78" r="1.7" fill="#fff" opacity=".95"/><circle cx="94" cy="78" r="1.7" fill="#fff" opacity=".95"/>
         <path className="creature-mouth" d={kind === 'koda' ? 'M71 94 Q80 97 89 94' : 'M72 97 Q80 105 89 97'} stroke="#44324b" strokeWidth="3.2" strokeLinecap="round"/>
