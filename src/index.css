@@ -237,42 +237,38 @@ button {
   user-select: none;
 }
 
-.hero-mascot-ink {
-  --mascot-rotate: -11deg;
-  bottom: 0.5rem;
-  left: -4rem;
+.hero-mascot-mori {
+  --mascot-rotate: -8deg;
+  top: -3.7rem;
+  left: 8%;
+  width: clamp(3.25rem, 5vw, 4.1rem);
 }
 
-.hero-mascot-coral {
-  --mascot-rotate: -9deg;
-  top: -4rem;
-  left: 12%;
-}
-
-.hero-mascot-spark {
-  --mascot-rotate: 6deg;
+.hero-mascot-pip {
+  --mascot-rotate: 7deg;
   top: -4.5rem;
-  left: 50%;
-  transform: translateX(-50%) rotate(var(--mascot-rotate));
+  left: 31%;
+  width: clamp(3rem, 4.5vw, 3.7rem);
 }
 
-.hero-mascot-blush {
-  --mascot-rotate: 10deg;
-  top: -4rem;
-  right: 12%;
+.hero-mascot-koda {
+  --mascot-rotate: -5deg;
+  top: -4.25rem;
+  right: 28%;
+  width: clamp(3rem, 4.5vw, 3.7rem);
 }
 
-.hero-mascot-lime {
-  --mascot-rotate: 12deg;
-  top: 1rem;
-  right: -4rem;
+.hero-mascot-milo {
+  --mascot-rotate: 9deg;
+  top: -3.5rem;
+  right: 7%;
+  width: clamp(3.25rem, 5vw, 4.1rem);
 }
 
-.hero-mascot-ink .hero-mascot-float { animation-delay: -4.5s; }
-.hero-mascot-coral .hero-mascot-float { animation-delay: -2.2s; }
-.hero-mascot-spark .hero-mascot-float { animation-delay: -1s; }
-.hero-mascot-blush .hero-mascot-float { animation-delay: -3.4s; }
-.hero-mascot-lime .hero-mascot-float { animation-delay: -5.6s; }
+.hero-mascot-mori .hero-mascot-float { animation-delay: -1.4s; }
+.hero-mascot-pip .hero-mascot-float { animation-delay: -3.2s; }
+.hero-mascot-koda .hero-mascot-float { animation-delay: -5.1s; }
+.hero-mascot-milo .hero-mascot-float { animation-delay: -2.3s; }
 
 @keyframes hero-mascots-surround {
   0% { opacity: 0; transform: scale(0.18) rotate(-7deg); }
@@ -296,19 +292,17 @@ button {
     width: 1.75rem;
   }
 
-  .hero-mascot-ink,
-  .hero-mascot-coral,
-  .hero-mascot-spark,
-  .hero-mascot-blush,
-  .hero-mascot-lime {
+  .hero-mascot-mori,
+  .hero-mascot-pip,
+  .hero-mascot-koda,
+  .hero-mascot-milo {
     bottom: auto;
   }
 
-  .hero-mascot-ink { top: -2.75rem; left: 0; }
-  .hero-mascot-coral { top: -3.5rem; left: 22%; }
-  .hero-mascot-spark { top: -3.75rem; }
-  .hero-mascot-blush { top: -3.5rem; right: 22%; }
-  .hero-mascot-lime { top: -2.75rem; right: 0; }
+  .hero-mascot-mori { top: -2.75rem; left: 1%; }
+  .hero-mascot-pip { top: -3.35rem; left: 27%; }
+  .hero-mascot-koda { top: -3.35rem; right: 27%; }
+  .hero-mascot-milo { top: -2.75rem; right: 1%; }
 }
 
 @keyframes motion-mask-top {
