@@ -31,10 +31,8 @@ import {
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { CSSProperties } from 'react'
-import { AgentJobs } from './components/AgentJobs'
 import { Brand } from './components/Brand'
 import { Faq } from './components/Faq'
-import { HeroWorkspace } from './components/HeroWorkspace'
 import { ProductPreview } from './components/ProductPreview'
 import { ScrollProgress } from './components/ScrollProgress'
 import { ScrollTextReveal } from './components/ScrollTextReveal'
@@ -46,7 +44,6 @@ const LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`
 
 const navigation = [
   { label: 'Features', href: '#features' },
-  { label: 'Agent jobs', href: '#agent-jobs' },
   { label: 'How it works', href: '#how-it-works' },
   { label: 'FAQ', href: '#faq' },
 ]
@@ -233,11 +230,6 @@ function Hero() {
           </div>
         </div>
 
-        <div className="hero-scroll-visual mx-auto mt-16 max-w-6xl sm:mt-20 lg:mt-24">
-          <div className="preview-enter min-w-0">
-            <HeroWorkspace />
-          </div>
-        </div>
 
         <div className="mt-16 grid gap-5 border-t border-white/[0.09] pt-7 sm:grid-cols-3 sm:mt-20">
           {[
@@ -405,37 +397,11 @@ function Features() {
   )
 }
 
-function AgentJobsSection() {
-  return (
-    <section id="agent-jobs" className="light-section scroll-mt-20 border-t border-ink-900/10 bg-paper py-24 text-ink-900 sm:py-28 lg:py-32" aria-labelledby="agent-jobs-title">
-      <div className="mx-auto max-w-site px-5 sm:px-8">
-        <SectionIntro
-          titleId="agent-jobs-title"
-          index="03"
-          eyebrow="A job for every agent"
-          title="Give every agent a role of its own."
-          description="Pick a role to see its sample task, response, and review boundary. Every example uses the same local data as the interactive preview."
-          light
-        />
-        <div data-reveal="">
-          <AgentJobs />
-        </div>
-        <div data-reveal="" className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-2xl text-[11px] leading-5 text-ink-700">Illustrative role preview — sample data. Switching roles only changes this page; no agent runs and no information is sent.</p>
-          <a href="#product-preview" className="group inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-ink-900 px-4 text-xs font-semibold text-white transition-colors hover:bg-ink-850">
-            Try the interactive preview<ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-          </a>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function HowItWorks() {
   return (
     <section id="how-it-works" className="scroll-mt-20 border-t border-white/[0.06] bg-[#2A2A55] py-24 sm:py-28 lg:py-32" aria-labelledby="how-title">
       <div className="mx-auto max-w-site px-5 sm:px-8">
-        <SectionIntro titleId="how-title" index="04" eyebrow="From setup to supervised work" title="A clear path from hello to handoff." description="GMDA keeps the workflow legible: configure the foundation, shape your team, and decide what happens at sensitive moments." />
+        <SectionIntro titleId="how-title" index="03" eyebrow="From setup to supervised work" title="A clear path from hello to handoff." description="GMDA keeps the workflow legible: configure the foundation, shape your team, and decide what happens at sensitive moments." />
         <WorkflowScene />
         <div data-reveal="" className="mt-16 flex flex-col gap-5 rounded-2xl border border-lime-300/[0.13] bg-lime-300/[0.035] p-5 sm:flex-row sm:items-center sm:p-6 lg:mt-20">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-lime-300/10 text-lime-300"><Sparkles className="h-5 w-5" aria-hidden="true" /></span>
@@ -451,7 +417,7 @@ function ControlAndPrivacy() {
   return (
     <section id="control" className="light-section scroll-mt-20 bg-paper py-24 text-ink-900 sm:py-28 lg:py-32" aria-labelledby="control-title">
       <div className="mx-auto max-w-site px-5 sm:px-8">
-        <SectionIntro titleId="control-title" index="05" eyebrow="Control and privacy" title="Clarity about where your work goes." description="Local-first is about where your workspace lives—not a promise that every request stays on-device. GMDA makes those boundaries part of the product story." light scrollTitle />
+        <SectionIntro titleId="control-title" index="04" eyebrow="Control and privacy" title="Clarity about where your work goes." description="Local-first is about where your workspace lives—not a promise that every request stays on-device. GMDA makes those boundaries part of the product story." light scrollTitle />
 
         <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div data-reveal="">
@@ -596,7 +562,6 @@ export default function App() {
         </section>
 
         <Features />
-        <AgentJobsSection />
         <HowItWorks />
         <ControlAndPrivacy />
 
@@ -604,7 +569,7 @@ export default function App() {
           <div className="mx-auto max-w-site px-5 sm:px-8">
             <div className="grid gap-10 lg:grid-cols-[0.55fr_1fr] lg:gap-20">
               <div data-reveal="">
-                <div className="mb-5 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-lime-300/75"><span>06</span><span className="h-px w-8 bg-lime-300/30" /><span>Good questions</span></div>
+                <div className="mb-5 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-lime-300/75"><span>05</span><span className="h-px w-8 bg-lime-300/30" /><span>Good questions</span></div>
                 <h2 id="faq-title" className="text-4xl font-semibold tracking-[-0.045em] text-white sm:text-5xl">A few things worth making clear.</h2>
                 <p className="mt-5 max-w-md text-sm leading-7 text-slate-400">What GMDA is, what its name means, and where the local-first boundary sits.</p>
                 <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="group mt-7 inline-flex items-center gap-2 text-xs font-semibold text-lime-300">Explore the project on GitHub<ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" /></a>
