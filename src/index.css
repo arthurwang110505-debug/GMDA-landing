@@ -4,22 +4,22 @@
 
 :root,
 :root[data-theme='dark'] {
-  --surface-page: 20 20 43;
-  --surface-card: 20 20 43;
-  --surface-layer: 42 42 85;
+  --surface-page: 15 46 53;
+  --surface-card: 22 21 29;
+  --surface-layer: 39 37 51;
   --color-primary: 255 255 255;
-  --color-accent: 200 242 60;
+  --color-accent: 165 222 228;
   --color-line: 255 255 255;
-  --color-approval: 255 240 235;
-  --color-approval-accent: 255 143 115;
+  --color-approval: 238 169 169;
+  --color-approval-accent: 238 169 169;
   --slate-50: 255 255 255;
-  --slate-100: 245 243 236;
-  --slate-200: 232 230 239;
-  --slate-300: 210 207 222;
-  --slate-400: 185 181 201;
-  --slate-500: 170 165 188;
-  --slate-600: 164 159 184;
-  --slate-700: 119 114 141;
+  --slate-100: 246 247 250;
+  --slate-200: 230 245 247;
+  --slate-300: 200 216 222;
+  --slate-400: 170 190 198;
+  --slate-500: 148 168 176;
+  --slate-600: 126 148 158;
+  --slate-700: 96 116 126;
 
   font-family: 'Manrope Variable', Manrope, ui-sans-serif, system-ui, sans-serif;
   color: rgb(var(--color-primary));
@@ -32,22 +32,22 @@
 }
 
 :root[data-theme='light'] {
-  --surface-page: 245 243 236;
+  --surface-page: 246 247 250;
   --surface-card: 255 255 255;
-  --surface-layer: 235 232 224;
-  --color-primary: 20 20 43;
-  --color-accent: 20 20 43;
-  --color-line: 20 20 43;
-  --color-approval: 20 20 43;
-  --color-approval-accent: 130 60 52;
-  --slate-50: 20 20 43;
-  --slate-100: 20 20 43;
-  --slate-200: 42 42 85;
-  --slate-300: 64 61 86;
-  --slate-400: 81 77 100;
-  --slate-500: 90 85 107;
-  --slate-600: 90 85 107;
-  --slate-700: 90 85 107;
+  --surface-layer: 230 245 247;
+  --color-primary: 22 21 29;
+  --color-accent: 31 111 124;
+  --color-line: 22 21 29;
+  --color-approval: 22 21 29;
+  --color-approval-accent: 163 63 73;
+  --slate-50: 22 21 29;
+  --slate-100: 22 21 29;
+  --slate-200: 39 37 51;
+  --slate-300: 70 72 88;
+  --slate-400: 88 92 108;
+  --slate-500: 96 100 116;
+  --slate-600: 96 100 116;
+  --slate-700: 96 100 116;
 
   color-scheme: light;
 }
@@ -74,18 +74,18 @@ button {
 }
 
 ::selection {
-  color: #14142B;
-  background: #C8F23C;
+  color: #16151D;
+  background: #A5DEE4;
 }
 
 :focus-visible {
-  outline: 2px solid #C8F23C;
+  outline: 2px solid #A5DEE4;
   outline-offset: 4px;
 }
 
 .light-section :focus-visible,
 :root[data-theme='light'] :focus-visible {
-  outline-color: #2A2A55;
+  outline-color: #1F6F7C;
 }
 
 @layer components {
@@ -148,7 +148,7 @@ button {
 }
 
 :root[data-theme='light'] .motion-mask-bottom-text {
-  box-shadow: inset 0 -0.09em 0 #C8F23C;
+  box-shadow: inset 0 -0.09em 0 #A5DEE4;
 }
 
 .motion-mask-divider {
@@ -182,7 +182,7 @@ button {
 .hero-mascot-surge {
   position: absolute;
   inset: -32% -9% 2%;
-  border: 1px solid rgb(var(--color-accent) / 0.35);
+  border: 1px solid rgb(var(--color-primary) / 0.14);
   border-radius: 50%;
   opacity: 0;
   animation: hero-mascot-ring 1.25s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;

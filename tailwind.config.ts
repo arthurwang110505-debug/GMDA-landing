@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Semantic colors switch with data-theme. Brand Ink, Spark Lime,
-        // Paper, Cloud White, and Blush remain fixed GMDA colors.
+        // Semantic colors switch with data-theme. The Aqua family, Rose, Sage,
+        // and the Ink/Cloud neutrals are fixed GMDA brand colors.
         primary: themeColor('color-primary'),
         accent: themeColor('color-accent'),
         line: themeColor('color-line'),
@@ -30,28 +30,45 @@ export default {
           500: themeColor('slate-500'),
           600: themeColor('slate-600'),
           700: themeColor('slate-700'),
-          800: '#2A2A55',
-          900: '#14142B',
-          950: '#14142B',
+          800: '#272533',
+          900: '#16151D',
+          950: '#16151D',
         },
         ink: {
-          950: '#14142B',
-          900: '#14142B',
-          850: '#2A2A55',
-          800: '#2A2A55',
-          700: '#2A2A55',
+          950: '#16151D',
+          900: '#16151D',
+          850: '#272533',
+          800: '#272533',
+          700: '#272533',
         },
+        // Fixed brand palette (see continue.md): Aqua family + Rose + Sage + neutrals.
+        aqua: {
+          50: '#E6F5F7', // Mist — soft fills
+          100: '#A5DEE4', // Aqua — brand, active
+          200: '#5DB8C4', // Lagoon — cards, rings
+          300: '#1F6F7C', // Teal — text on light
+          400: '#0F2E35', // Abyss — dark hero areas
+        },
+        rose: {
+          DEFAULT: '#EEA9A9',
+          deep: '#A33F49',
+        },
+        sage: {
+          DEFAULT: '#B5CAA0',
+          deep: '#4E683B',
+        },
+        // Legacy aliases (class names kept for existing markup).
         lime: {
-          300: '#C8F23C',
-          400: '#B7DA33',
-          500: '#C8F23C',
+          300: '#A5DEE4',
+          400: '#8CC9D1',
+          500: '#5DB8C4',
         },
         blush: {
-          50: '#FFF0EB',
-          100: '#FF8F73',
-          200: '#FF8F73',
+          50: '#EEA9A9',
+          100: '#EEA9A9',
+          200: '#A33F49',
         },
-        paper: '#F5F3EC',
+        paper: '#F6F7FA',
       },
       fontFamily: {
         sans: ['Manrope Variable', 'Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif'],

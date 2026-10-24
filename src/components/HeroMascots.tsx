@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { buildCast, fitCamera, SCALES } from './mascotCast'
 
 export function HeroMascots() {
@@ -32,9 +33,14 @@ export function HeroMascots() {
     const camera = new THREE.PerspectiveCamera(32, 4, 0.1, 60)
     fitCamera(camera, 4)
 
-    // three-point studio lighting
-    const hemi = new THREE.HemisphereLight(0xfff2e0, 0x2a2a40, 0.55)
-    const key = new THREE.DirectionalLight(0xffe6c4, 1.7)
+    // studio IBL — soft room reflections give the silicone/vinyl its sheen
+    const pmrem = new THREE.PMREMGenerator(renderer)
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+    scene.environmentIntensity = 0.5
+
+    // three-point studio lighting on top of the IBL
+    const hemi = new THREE.HemisphereLight(0xfff2e0, 0x22303a, 0.28)
+    const key = new THREE.DirectionalLight(0xffe6c4, 1.35)
     key.position.set(-4.5, 6, 5.5)
     key.castShadow = true
     key.shadow.mapSize.set(2048, 2048)
@@ -45,11 +51,11 @@ export function HeroMascots() {
     key.shadow.camera.near = 1
     key.shadow.camera.far = 20
     key.shadow.bias = -0.0004
-    const fill = new THREE.DirectionalLight(0xb8c8ff, 0.5)
+    const fill = new THREE.DirectionalLight(0xb8c8ff, 0.42)
     fill.position.set(5, 2.5, 4)
-    const rim = new THREE.DirectionalLight(0xffffff, 0.85)
+    const rim = new THREE.DirectionalLight(0xffffff, 0.75)
     rim.position.set(0, 5, -6)
-    const ambient = new THREE.AmbientLight(0xffffff, 0.16)
+    const ambient = new THREE.AmbientLight(0xffffff, 0.12)
     scene.add(hemi, key, fill, rim, ambient)
 
     const { root, rigs, sparkles } = buildCast()
@@ -195,6 +201,7 @@ export function HeroMascots() {
         else material?.dispose()
       })
       renderer.dispose()
+      pmrem.dispose()
     }
   }, [])
 

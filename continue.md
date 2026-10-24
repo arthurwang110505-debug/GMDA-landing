@@ -4,9 +4,19 @@
 
 ## Design direction update (2026-10-24, later) — three.js cinematic cast
 
-The hero mascots are now **real 3D characters rendered with three.js** (`src/components/HeroMascots.tsx` + `src/components/mascotCast.ts`), replacing the inline-SVG era. Target look (per the approved reference art): soft-body collectible characters with role props — Mori's magnifier, Pip's writing sparks, Koda's laptop, Milo's headphones — matte vinyl materials (MeshPhysicalMaterial with sheen + clearcoat), three-point studio lighting, soft contact shadows, simple navy dot eyes with glints, happy arc eyes, and blushes. Per-character idle motion, blinks, glances, antenna wiggles, and pointer-proximity lean are built in; `prefers-reduced-motion` renders a static frame. Characters remain decorative UI only.
+The hero mascots are now **real 3D characters rendered with three.js** (`src/components/HeroMascots.tsx` + `src/components/mascotCast.ts`), replacing the inline-SVG era. Target look (per the user's cinematic concept render — "must look exactly like it"): soft-body collectible characters with role props — Mori's gold magnifier, Pip's spark stars, Koda's laptop with pulsing status screen, Milo's headphones + twin antenna balls — matte silicone vinyl materials (MeshPhysicalMaterial with sheen + clearcoat), three-point studio lighting plus RoomEnvironment PMREM (`scene.environmentIntensity=0.5`), soft contact shadows, **large glossy expressive eyes (sclera + dark-navy iris + twin catchlights, not dot eyes)**, happy arc eyes for Pip, blush/cheek-shadow sprites. Per-character idle motion, breathing, sways, blinks, iris darts, and Koda's glow pulse are built in; `prefers-reduced-motion` renders a static frame. Characters remain decorative UI only.
+
+Smoke: `npx esbuild .smoke-entry.ts --bundle --format=cjs --external:three` + node (buildCast is headless-safe, ~98 meshes).
 
 The site brand mark is the new "gmda" wordmark (`public/gmda-logo.png`, favicon `public/gmda-mark.png`). Concept/reference renders stay in the gitignored `concepts/` folder.
+
+## Brand palette (fixed colors — sampled from the user's palette spec)
+
+- Aqua family: Mist `#E6F5F7` (soft fills) · Aqua `#A5DEE4` (brand/active/primary buttons with ink text) · Lagoon `#5DB8C4` (cards, rings) · Teal `#1F6F7C` (text on light) · Abyss `#0F2E35` (dark hero areas).
+- Rose `#EEA9A9` (highlights/new/warmth; 9.4:1 with ink text) · Rose Deep `#A33F49` (rose text on light). Sage `#B5CAA0` (success/online states only) · Sage Deep `#4E683B` (sage text on light).
+- Neutrals: Ink `#16151D` (dark/stark) · Ink Soft `#272533` (dark cards) · Cloud `#F6F7FA` (background) · White `#FFFFFF` (cards).
+- Rules: pastels NEVER as text on light (use Teal/Rose Deep/Sage Deep); no gradients — depth from darker tones; keep Aqua fields away from Koda (hue clash).
+- Implementation: `tailwind.config.ts` fixed colors (`aqua.*`, `rose`, `sage`, `ink.*`); legacy class names `lime-*`/`blush-*`/`paper` kept as aliases to the new values. Theme vars: dark = Abyss page + Ink cards + Aqua accent; light = Cloud page + White cards + Teal accent. `index.html` theme-colors `#0F2E35` / `#F6F7FA`.
 
 ## Design direction update (2026-10-24) — soft-3D collectible
 
