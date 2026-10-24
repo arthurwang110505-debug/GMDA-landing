@@ -30,7 +30,7 @@ export function ScrollProgress() {
 
   return (
     <div className="scroll-progress pointer-events-none fixed left-0 right-0 top-0 z-[70] h-[2px]" aria-hidden="true">
-      <div ref={barRef} className="h-full origin-left scale-x-0 bg-lime-300" />
+      <div ref={barRef} className="h-full origin-left scale-x-0 bg-accent" />
     </div>
   )
 }
