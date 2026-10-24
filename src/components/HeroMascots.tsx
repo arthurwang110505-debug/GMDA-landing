@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows } from '@react-three/drei'
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import type { Group, Mesh, Vector3 } from 'three'
 
@@ -220,14 +220,7 @@ function Mascot({ config, pointer }: { config: MascotConfig; pointer: React.RefO
   )
 }
 
-function MascotStage() {
-  const pointer = useRef(new THREE.Vector3())
-
-  useFrame((state) => {
-    pointer.current.x = THREE.MathUtils.clamp((state.pointer.x - 0.5) * 2, -1, 1)
-    pointer.current.y = THREE.MathUtils.clamp((state.pointer.y - 0.5) * 2, -1, 1)
-  })
-
+function MascotStage({ pointer }: { pointer: React.RefObject<Vector3> }) {
   return (
     <>
       <ambientLight intensity={1.25} />
@@ -242,6 +235,18 @@ function MascotStage() {
 }
 
 export function HeroMascots() {
+  const pointer = useRef(new THREE.Vector3())
+
+  useEffect(() => {
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === 'touch') return
+      pointer.current.x = THREE.MathUtils.clamp((event.clientX / window.innerWidth) * 2 - 1, -1, 1)
+      pointer.current.y = THREE.MathUtils.clamp(-((event.clientY / window.innerHeight) * 2 - 1), -1, 1)
+    }
+    window.addEventListener('pointermove', onPointerMove, { passive: true })
+    return () => window.removeEventListener('pointermove', onPointerMove)
+  }, [])
+
   return (
     <span className="hero-mascot-cluster" aria-hidden="true">
       <Canvas
@@ -250,7 +255,7 @@ export function HeroMascots() {
         camera={{ position: [0, 0.7, 7.2], fov: 30 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
-        <MascotStage />
+        <MascotStage pointer={pointer} />
       </Canvas>
     </span>
   )
