@@ -19,15 +19,15 @@ function Creature({ kind }: { kind: CreatureKind }) {
 
   return (
     <svg viewBox="0 0 120 120" fill="none" role="presentation" aria-hidden="true">
-      <ellipse cx="60" cy="105" rx="31" ry="6" fill="#11111f" opacity=".12" />
+      <ellipse className="creature-shadow" cx="60" cy="105" rx="31" ry="6" fill="#11111f" opacity=".12" />
       {kind === 'mori' && (
         <>
-          <path d="M59 28 Q53 17 62 10" stroke="#8BCB69" strokeWidth="4" strokeLinecap="round" />
-          <circle cx="63" cy="9" r="6" fill="#B8ED83" stroke="#24243d" strokeWidth="2.5" />
-          <path d="M25 68 C20 49 34 34 50 35 C58 25 79 30 84 41 C101 44 104 66 94 82 C86 96 38 98 27 82 C24 78 23 73 25 68Z" fill="#F5F0E6" {...common} />
+          <path className="creature-antenna" d="M59 28 Q53 17 62 10" stroke="#8BCB69" strokeWidth="4" strokeLinecap="round" />
+          <circle className="creature-antenna-tip" cx="63" cy="9" r="6" fill="#B8ED83" stroke="#24243d" strokeWidth="2.5" />
+          <path className="creature-body" d="M25 68 C20 49 34 34 50 35 C58 25 79 30 84 41 C101 44 104 66 94 82 C86 96 38 98 27 82 C24 78 23 73 25 68Z" fill="#F5F0E6" {...common} />
           <path d="M35 44 Q43 37 48 43" stroke="#fff" strokeWidth="4" strokeLinecap="round" opacity=".9" />
-          <circle cx="45" cy="62" r="4.2" fill="#24243d" /><circle cx="73" cy="62" r="4.2" fill="#24243d" />
-          <path d="M53 72 Q60 78 67 71" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
+          <g className="creature-eyes"><circle cx="45" cy="62" r="4.2" fill="#24243d" /><circle cx="73" cy="62" r="4.2" fill="#24243d" /></g>
+          <path className="creature-mouth" d="M53 72 Q60 78 67 71" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
           <circle cx="36" cy="71" r="5" fill="#F4A8A1" opacity=".75" /><circle cx="83" cy="71" r="5" fill="#F4A8A1" opacity=".75" />
           <path d="M84 48 L98 38 L100 54" fill="#DCECCB" {...common} />
           <circle cx="98" cy="38" r="3" fill="#24243d" />
@@ -35,10 +35,10 @@ function Creature({ kind }: { kind: CreatureKind }) {
       )}
       {kind === 'pip' && (
         <>
-          <path d="M60 20 C65 31 79 30 82 42 C99 48 96 70 87 82 C77 95 40 96 30 81 C20 67 27 48 41 42 C43 29 53 29 60 20Z" fill="#FFD56B" {...common} />
-          <path d="M59 21 C60 15 66 13 70 18" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="47" cy="62" r="4" fill="#24243d" /><circle cx="72" cy="62" r="4" fill="#24243d" />
-          <path d="M53 71 Q60 78 67 71" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
+          <path className="creature-body" d="M60 20 C65 31 79 30 82 42 C99 48 96 70 87 82 C77 95 40 96 30 81 C20 67 27 48 41 42 C43 29 53 29 60 20Z" fill="#FFD56B" {...common} />
+          <path className="creature-antenna" d="M59 21 C60 15 66 13 70 18" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
+          <g className="creature-eyes"><circle cx="47" cy="62" r="4" fill="#24243d" /><circle cx="72" cy="62" r="4" fill="#24243d" /></g>
+          <path className="creature-mouth" d="M53 71 Q60 78 67 71" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
           <circle cx="39" cy="70" r="4.5" fill="#F28F91" opacity=".8" /><circle cx="80" cy="70" r="4.5" fill="#F28F91" opacity=".8" />
           <path d="M83 40 L93 30 L95 43" fill="#FFF0B9" {...common} />
           <path d="M26 86 Q20 91 17 85" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
@@ -46,23 +46,22 @@ function Creature({ kind }: { kind: CreatureKind }) {
       )}
       {kind === 'koda' && (
         <>
-          <path d="M30 43 Q30 31 43 31 H77 Q91 31 91 45 V76 Q91 91 76 91 H45 Q29 91 29 76Z" fill="#8BC5FF" {...common} />
+          <path className="creature-body" d="M30 43 Q30 31 43 31 H77 Q91 31 91 45 V76 Q91 91 76 91 H45 Q29 91 29 76Z" fill="#8BC5FF" {...common} />
           <path d="M43 31 L48 22 L56 31 M69 31 L77 22 L80 32" fill="#8BC5FF" {...common} />
-          <path d="M40 57 Q44 51 49 57" stroke="#24243d" strokeWidth="3.5" strokeLinecap="round" />
-          <path d="M69 57 Q74 51 78 57" stroke="#24243d" strokeWidth="3.5" strokeLinecap="round" />
-          <path d="M52 70 H67" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
+          <g className="creature-eyes"><path d="M40 57 Q44 51 49 57 M69 57 Q74 51 78 57" stroke="#24243d" strokeWidth="3.5" strokeLinecap="round" /></g>
+          <path className="creature-mouth" d="M52 70 H67" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
           <rect x="45" y="77" width="30" height="8" rx="4" fill="#4C82C2" />
           <path d="M58 80 L62 80" stroke="#DCEBFF" strokeWidth="2" strokeLinecap="round" />
-          <circle cx="90" cy="43" r="5" fill="#C9F36A" stroke="#24243d" strokeWidth="2.5" />
+          <circle className="creature-status-light" cx="90" cy="43" r="5" fill="#C9F36A" stroke="#24243d" strokeWidth="2.5" />
         </>
       )}
       {kind === 'milo' && (
         <>
-          <path d="M60 25 C77 25 91 39 91 57 C91 77 76 91 59 91 C42 91 28 77 28 58 C28 39 42 25 60 25Z" fill="#C6A7FF" {...common} />
-          <path d="M60 25 L60 14" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="60" cy="12" r="6" fill="#E5D8FF" stroke="#24243d" strokeWidth="2.5" />
-          <path d="M42 56 Q47 49 52 56 M68 56 Q73 49 78 56" stroke="#24243d" strokeWidth="3.5" strokeLinecap="round" />
-          <path d="M52 69 Q60 75 68 69" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
+          <path className="creature-body" d="M60 25 C77 25 91 39 91 57 C91 77 76 91 59 91 C42 91 28 77 28 58 C28 39 42 25 60 25Z" fill="#C6A7FF" {...common} />
+          <path className="creature-antenna" d="M60 25 L60 14" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
+          <circle className="creature-antenna-tip" cx="60" cy="12" r="6" fill="#E5D8FF" stroke="#24243d" strokeWidth="2.5" />
+          <g className="creature-eyes"><path d="M42 56 Q47 49 52 56 M68 56 Q73 49 78 56" stroke="#24243d" strokeWidth="3.5" strokeLinecap="round" /></g>
+          <path className="creature-mouth" d="M52 69 Q60 75 68 69" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
           <path d="M59 43 L59 35 M54 39 L64 39" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity=".9" />
           <circle cx="37" cy="69" r="4.5" fill="#F4A8C9" /><circle cx="82" cy="69" r="4.5" fill="#F4A8C9" />
           <path d="M83 82 Q91 85 92 78" stroke="#24243d" strokeWidth="3" strokeLinecap="round" />
@@ -162,7 +161,7 @@ export function HeroMascots() {
     <span ref={clusterRef} className="hero-mascot-cluster" aria-hidden="true">
       <span className="hero-mascot-surge" />
       {mascots.map((mascot) => (
-        <span key={mascot.name} className={`hero-mascot hero-mascot-${mascot.kind}`}>
+        <span key={mascot.name} className={`hero-mascot hero-mascot-${mascot.kind}`} data-mascot={mascot.kind}>
           <span className="hero-mascot-interaction">
             <span className="hero-mascot-float">
               <Creature kind={mascot.kind} />
