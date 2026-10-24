@@ -36,7 +36,7 @@ export const previewAgents: PreviewAgent[] = [
     initials: 'MA',
     role: 'Research lead',
     model: 'Workspace default',
-    avatarClass: 'bg-mint-300 text-ink-900',
+    avatarClass: 'bg-lime-300 text-ink-900',
     userMessage: 'Pull together the launch brief and flag anything that needs my review.',
     agentMessage:
       'I found the approved positioning in the project notes and mapped the open questions. Sol has the draft; I’m holding the publishing step for you.',
@@ -87,7 +87,7 @@ export const previewAgents: PreviewAgent[] = [
     initials: 'SO',
     role: 'Product writer',
     model: 'Writing profile',
-    avatarClass: 'bg-[#c8d5ff] text-[#17243d]',
+    avatarClass: 'bg-[#FFFFFF] text-[#14142B]',
     userMessage: 'Draft a concise launch announcement from the approved brief.',
     agentMessage:
       'The draft is ready. I kept the rollout language measured and marked two product claims for your review before anything is shared.',
@@ -138,7 +138,7 @@ export const previewAgents: PreviewAgent[] = [
     initials: 'KI',
     role: 'Release reviewer',
     model: 'Review profile',
-    avatarClass: 'bg-[#f1d2a8] text-[#382713]',
+    avatarClass: 'bg-[#FF8F73] text-[#14142B]',
     userMessage: 'Check the release notes and turn open questions into a review list.',
     agentMessage:
       'I found three unresolved items and separated them from the approved notes. The review list is ready; creating a tracker ticket needs your approval.',
