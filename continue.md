@@ -2,6 +2,12 @@
 
 > This file is the handoff brief for any AI coding agent continuing the GMDA landing-page mascot work. Read this before changing mascot visuals or behavior.
 
+## Design direction update (2026-10-24, later) — three.js cinematic cast
+
+The hero mascots are now **real 3D characters rendered with three.js** (`src/components/HeroMascots.tsx` + `src/components/mascotCast.ts`), replacing the inline-SVG era. Target look (per the approved reference art): soft-body collectible characters with role props — Mori's magnifier, Pip's writing sparks, Koda's laptop, Milo's headphones — matte vinyl materials (MeshPhysicalMaterial with sheen + clearcoat), three-point studio lighting, soft contact shadows, simple navy dot eyes with glints, happy arc eyes, and blushes. Per-character idle motion, blinks, glances, antenna wiggles, and pointer-proximity lean are built in; `prefers-reduced-motion` renders a static frame. Characters remain decorative UI only.
+
+The site brand mark is the new "gmda" wordmark (`public/gmda-logo.png`, favicon `public/gmda-mark.png`). Concept/reference renders stay in the gitignored `concepts/` folder.
+
 ## Design direction update (2026-10-24) — soft-3D collectible
 
 The preferred visual style is now **soft 3D collectible creatures**: rounded volume, premium matte silicone-like materials, subtle surface imperfections (light `feTurbulence` grain over the bodies), and studio lighting (soft key from upper-left, warm ambient occlusion at the base, small soft specular sheen). The four heroes keep their names, roles, silhouettes, and signature details (Mori's sprout + side leaf, Pip's star points + spark dashes, Koda's status light + sleepy lids, Milo's radar dish + blush).

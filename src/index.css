@@ -174,7 +174,7 @@ button {
   pointer-events: none;
   position: absolute;
   z-index: 3;
-  inset: 0;
+  inset: -7rem -1.5rem -2.5rem;
   transform-origin: 50% 60%;
   animation: hero-mascots-surround 1.1s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -188,130 +188,13 @@ button {
   animation: hero-mascot-ring 1.25s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.hero-mascot {
-  --mascot-rotate: 0deg;
+.hero-mascot-canvas {
   position: absolute;
-  display: block;
-  width: clamp(2.75rem, 4vw, 3.5rem);
-  aspect-ratio: 1;
-  transform: rotate(var(--mascot-rotate));
-}
-
-.hero-mascot-interaction {
-  --mascot-react-x: 0px;
-  --mascot-react-y: 0px;
-  --mascot-react-scale: 1;
-  --mascot-react-tilt: 0deg;
-  --mascot-near: 0;
-  position: relative;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  transform: translate3d(var(--mascot-react-x), var(--mascot-react-y), 0) scale(var(--mascot-react-scale)) rotate(var(--mascot-react-tilt));
-  transition: transform 160ms ease-out;
-  will-change: transform;
 }
-
-/* The mascot cluster stays click-through, but individual mascots need
-   hit-testing on fine-pointer devices so :hover effects (e.g. the hover
-   sparkle) can actually trigger. Touch keeps full pass-through. */
-@media (hover: hover) and (pointer: fine) {
-  .hero-mascot-interaction {
-    pointer-events: auto;
-  }
-}
-
-.hero-mascot-interaction::after {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border: 1px solid rgb(var(--color-accent) / 0.42);
-  border-radius: 50%;
-  opacity: var(--mascot-near);
-  transition: opacity 140ms ease-out;
-}
-
-.hero-mascot-float {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform-origin: 50% 82%;
-  animation: mascot-mori-idle 5.8s ease-in-out infinite;
-}
-
-.hero-mascot-pip .hero-mascot-float { animation-name: mascot-pip-bounce; animation-duration: 4.2s; }
-.hero-mascot-koda .hero-mascot-float { animation-name: mascot-koda-focus; animation-duration: 6.4s; }
-.hero-mascot-milo .hero-mascot-float { animation-name: mascot-milo-scan; animation-duration: 5.2s; }
-
-.hero-mascot svg .creature-eyes {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: mascot-blink 5.4s ease-in-out infinite;
-}
-.hero-mascot-pip svg .creature-eyes { animation-delay: -1.1s; }
-.hero-mascot-koda svg .creature-eyes { animation-delay: -2.7s; }
-.hero-mascot-milo svg .creature-eyes { animation-delay: -3.6s; }
-
-.hero-mascot-mori .creature-antenna-tip,
-.hero-mascot-milo .creature-antenna-tip {
-  transform-box: fill-box;
-  transform-origin: center bottom;
-  animation: mascot-antenna-wiggle 3.7s ease-in-out infinite;
-}
-.hero-mascot-koda .creature-status-light {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: mascot-status-pulse 2.6s ease-in-out infinite;
-}
-
-.hero-mascot-interaction::before {
-  content: '✦';
-  position: absolute;
-  z-index: 2;
-  top: -0.35rem;
-  right: -0.2rem;
-  color: #C8F23C;
-  font-size: 0.9rem;
-  opacity: 0;
-  transform: scale(0.3) rotate(-25deg);
-  transition: opacity 180ms ease, transform 240ms cubic-bezier(.2, .8, .2, 1);
-}
-.hero-mascot-interaction:hover::before { opacity: 1; transform: scale(1) rotate(0); }
-
-
-
-.hero-mascot-mori {
-  --mascot-rotate: -8deg;
-  top: -3.7rem;
-  left: 8%;
-  width: clamp(3.25rem, 5vw, 4.1rem);
-}
-
-.hero-mascot-pip {
-  --mascot-rotate: 7deg;
-  top: -4.5rem;
-  left: 31%;
-  width: clamp(3rem, 4.5vw, 3.7rem);
-}
-
-.hero-mascot-koda {
-  --mascot-rotate: -5deg;
-  top: -4.25rem;
-  right: 28%;
-  width: clamp(3rem, 4.5vw, 3.7rem);
-}
-
-.hero-mascot-milo {
-  --mascot-rotate: 9deg;
-  top: -3.5rem;
-  right: 7%;
-  width: clamp(3.25rem, 5vw, 4.1rem);
-}
-
-.hero-mascot-mori .hero-mascot-float { animation-delay: -1.4s; }
-.hero-mascot-pip .hero-mascot-float { animation-delay: -3.2s; }
-.hero-mascot-koda .hero-mascot-float { animation-delay: -5.1s; }
-.hero-mascot-milo .hero-mascot-float { animation-delay: -2.3s; }
 
 @keyframes hero-mascots-surround {
   0% { opacity: 0; transform: scale(0.18) rotate(-7deg); }
@@ -323,64 +206,6 @@ button {
   0% { opacity: 0; transform: scale(0.65); }
   35% { opacity: 0.55; }
   100% { opacity: 0; transform: scale(1.15); }
-}
-
-@keyframes mascot-mori-idle {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(-1deg); }
-  42% { transform: translate3d(0, -5px, 0) rotate(1deg); }
-  52% { transform: translate3d(0, -5px, 0) rotate(1deg); }
-  62% { transform: translate3d(0, 0, 0) rotate(-1deg); }
-}
-@keyframes mascot-pip-bounce {
-  0%, 74%, 100% { transform: translateY(0) rotate(0); }
-  78% { transform: translateY(-9px) rotate(-5deg); }
-  83% { transform: translateY(0) rotate(4deg); }
-  88% { transform: translateY(-3px) rotate(-2deg); }
-  93% { transform: translateY(0) rotate(0); }
-}
-@keyframes mascot-koda-focus {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  38% { transform: translateY(-2px) rotate(0); }
-  43% { transform: translateY(-2px) rotate(-2deg); }
-  48% { transform: translateY(0) rotate(0); }
-}
-@keyframes mascot-milo-scan {
-  0%, 100% { transform: translateX(0) rotate(0); }
-  25% { transform: translateX(-2px) rotate(-2deg); }
-  50% { transform: translateX(0) rotate(0); }
-  75% { transform: translateX(2px) rotate(2deg); }
-}
-@keyframes mascot-blink {
-  0%, 43%, 47%, 100% { transform: scaleY(1); }
-  45% { transform: scaleY(0.12); }
-}
-@keyframes mascot-antenna-wiggle {
-  0%, 72%, 100% { transform: rotate(0); }
-  78% { transform: rotate(14deg); }
-  84% { transform: rotate(-10deg); }
-  90% { transform: rotate(5deg); }
-}
-@keyframes mascot-status-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.22); }
-}
-
-@media (max-width: 639px) {
-  .hero-mascot {
-    width: 1.75rem;
-  }
-
-  .hero-mascot-mori,
-  .hero-mascot-pip,
-  .hero-mascot-koda,
-  .hero-mascot-milo {
-    bottom: auto;
-  }
-
-  .hero-mascot-mori { top: -2.75rem; left: 1%; }
-  .hero-mascot-pip { top: -3.35rem; left: 27%; }
-  .hero-mascot-koda { top: -3.35rem; right: 27%; }
-  .hero-mascot-milo { top: -2.75rem; right: 1%; }
 }
 
 @keyframes motion-mask-top {
@@ -694,24 +519,11 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-mascot-cluster,
-  .hero-mascot-float,
-  .hero-mascot svg .creature-eyes,
-  .hero-mascot .creature-antenna-tip,
-  .hero-mascot .creature-status-light {
-    animation: none !important;
-  }
-
   .hero-mascot-cluster {
+    animation: none !important;
     transform: none;
   }
 
-  .hero-mascot-interaction {
-    transform: none;
-    transition: none;
-  }
-
-  .hero-mascot-interaction::after,
   .hero-mascot-surge {
     display: none;
   }
@@ -769,28 +581,4 @@ button {
     clip-path: none;
     translate: none;
   }
-}
-
-
-/* Original GMDA blob-creature artwork */
-.hero-mascot svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 10px 10px rgba(28, 22, 48, 0.13));
-  user-select: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-mascot-cluster,
-  .hero-mascot-float,
-  .hero-mascot-surge {
-    animation: none !important;
-  }
-}
-
-
-/* The mascot hover sparkle is decorative; pointer reactions remain optional. */
-@media (hover: none) {
-  .hero-mascot-interaction::before { display: none; }
 }
