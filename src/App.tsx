@@ -35,6 +35,7 @@ import { useEffect, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { Brand } from './components/Brand'
 import { Faq } from './components/Faq'
+import { HeroMascots } from './components/HeroMascots'
 import { ProductPreview } from './components/ProductPreview'
 import { ScrollProgress } from './components/ScrollProgress'
 import { ScrollTextReveal } from './components/ScrollTextReveal'
@@ -207,7 +208,7 @@ function Hero() {
       <div className="hero-parallax-grid pointer-events-none absolute inset-0 fine-grid opacity-40" />
       <div className="relative mx-auto max-w-site px-5 py-16 sm:px-8 sm:py-20 lg:py-24 xl:py-28">
         <div className="hero-scroll-copy relative z-10 mx-auto max-w-5xl text-center">
-          <div className="mb-7 flex items-center justify-center gap-3 font-mono text-[9px] uppercase tracking-[0.2em] text-accent sm:text-[10px]">
+          <div className="mb-20 flex items-center justify-center gap-3 font-mono sm:mb-24 text-[9px] uppercase tracking-[0.2em] text-accent sm:text-[10px]">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime-300 opacity-30" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-lime-300" />
@@ -215,8 +216,11 @@ function Hero() {
             An independent agent workspace
           </div>
           <h1 id="hero-title" aria-label="Your AI team. Your control." className="relative text-balance text-[clamp(3.2rem,8vw,6.75rem)] font-semibold leading-[0.99] tracking-[-0.06em] text-primary">
-            <span className="motion-mask-frame block">
-              <span className="motion-mask-top-text block">Your AI team.</span>
+            <span className="relative mx-auto block w-fit">
+              <span className="motion-mask-frame block">
+                <span className="motion-mask-top-text block">Your AI team.</span>
+              </span>
+              <HeroMascots />
             </span>
             <span className="motion-mask-divider" aria-hidden="true" />
             <span className="motion-mask-frame mt-2 block text-accent">
