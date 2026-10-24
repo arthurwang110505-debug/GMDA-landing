@@ -49,6 +49,7 @@ The included `vercel.json` also declares the framework, install command, build c
 
 - `src/App.tsx` — page sections, navigation, feature content, and footer
 - `src/components/ProductPreview.tsx` — the single interactive sample workspace
+- `src/components/HeroMascots.tsx` — mascot palette treatments, opening surround sequence, and fine-pointer proximity reactions
 - `src/components/WorkflowScene.tsx` — scroll-scrubbed desktop workflow with static mobile fallback
 - `src/components/ScrollProgress.tsx` — lightweight page reading-progress indicator
 - `src/components/Faq.tsx` — accessible FAQ accordion
@@ -57,6 +58,7 @@ The included `vercel.json` also declares the framework, install command, build c
 - `src/data/preview.ts` — all sample agents, messages, tasks, and approvals
 - `src/index.css` — semantic theme tokens, Tailwind layers, motion, focus states, and decorative grids
 - `public/app-icon.svg` — official GMDA ink app icon from the GMDA brand kit
+- `public/gmda-mascot-*.svg` — transparent brand-palette mascot treatments based on the official GMDA brand-kit artwork
 
 ## Brand palette
 
@@ -68,7 +70,7 @@ The header toggle switches every page section, product illustration, workflow sc
 
 ## Accessibility and privacy
 
-The page uses semantic landmarks and headings, keyboard-operable navigation and disclosures, visible focus states, responsive layouts, and reduced-motion support. The desktop scroll-scrubbed workflow becomes a standard stacked layout on mobile and when reduced motion is requested; scroll reveals and hero parallax are also disabled for reduced motion. Fonts and icons are bundled locally; the site makes no third-party font, analytics, or tracking requests.
+The page uses semantic landmarks and headings, keyboard-operable navigation and disclosures, visible focus states, responsive layouts, and reduced-motion support. The desktop scroll-scrubbed workflow becomes a standard stacked layout on mobile and when reduced motion is requested; scroll reveals and hero parallax are also disabled for reduced motion. Mascot entrance, idle, and proximity effects are disabled for reduced motion, and pointer reactions are limited to fine-pointer devices. Fonts and icons are bundled locally; the site makes no third-party font, analytics, or tracking requests.
 
 The privacy copy distinguishes local-first workspace storage from external model providers, integrations, and optional remote computers. It intentionally avoids absolute security or compliance claims.
 
