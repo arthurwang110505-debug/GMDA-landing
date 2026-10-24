@@ -212,6 +212,15 @@ button {
   will-change: transform;
 }
 
+/* The mascot cluster stays click-through, but individual mascots need
+   hit-testing on fine-pointer devices so :hover effects (e.g. the hover
+   sparkle) can actually trigger. Touch keeps full pass-through. */
+@media (hover: hover) and (pointer: fine) {
+  .hero-mascot-interaction {
+    pointer-events: auto;
+  }
+}
+
 .hero-mascot-interaction::after {
   content: '';
   position: absolute;
