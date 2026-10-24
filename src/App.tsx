@@ -31,6 +31,7 @@ import {
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { CSSProperties } from 'react'
+import { AgentJobs } from './components/AgentJobs'
 import { Brand } from './components/Brand'
 import { Faq } from './components/Faq'
 import { HeroWorkspace } from './components/HeroWorkspace'
@@ -45,6 +46,7 @@ const LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`
 
 const navigation = [
   { label: 'Features', href: '#features' },
+  { label: 'Agent jobs', href: '#agent-jobs' },
   { label: 'How it works', href: '#how-it-works' },
   { label: 'FAQ', href: '#faq' },
 ]
@@ -72,7 +74,7 @@ function Header() {
           <Brand />
         </a>
 
-        <nav className="ml-auto hidden items-center gap-7 md:flex" aria-label="Main navigation">
+        <nav className="ml-auto hidden items-center gap-7 lg:flex" aria-label="Main navigation">
           {navigation.map((item) => (
             <a key={item.href} href={item.href} className="rounded text-[13px] font-medium text-slate-400 transition-colors hover:text-lime-300">
               {item.label}
@@ -91,7 +93,7 @@ function Header() {
 
         <a
           href="#product-preview"
-          className="ml-7 hidden min-h-10 items-center gap-2 rounded-lg bg-lime-300 px-4 text-xs font-bold text-ink-900 transition-all hover:bg-lime-400 md:flex"
+          className="ml-7 hidden min-h-10 items-center gap-2 rounded-lg bg-lime-300 px-4 text-xs font-bold text-ink-900 transition-all hover:bg-lime-400 lg:flex"
         >
           Explore GMDA
           <ArrowDown className="h-3.5 w-3.5" aria-hidden="true" />
@@ -99,7 +101,7 @@ function Header() {
 
         <button
           type="button"
-          className="ml-auto flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:border-lime-300/30 hover:text-lime-300 md:hidden"
+          className="ml-auto flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:border-lime-300/30 hover:text-lime-300 lg:hidden"
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
           aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -110,7 +112,7 @@ function Header() {
       </div>
 
       {menuOpen && (
-        <nav id="mobile-navigation" className="faq-enter absolute left-0 right-0 top-full border-b border-white/10 bg-ink-950 px-5 pb-6 pt-3 shadow-2xl md:hidden" aria-label="Mobile navigation">
+        <nav id="mobile-navigation" className="faq-enter absolute left-0 right-0 top-full border-b border-white/10 bg-ink-950 px-5 pb-6 pt-3 shadow-2xl lg:hidden" aria-label="Mobile navigation">
           <div className="mx-auto max-w-site">
             {navigation.map((item) => (
               <a
@@ -191,57 +193,53 @@ function Hero() {
   return (
     <section ref={heroRef} id="top" className="hero-grid relative overflow-hidden" aria-labelledby="hero-title">
       <div className="hero-scroll-orb pointer-events-none absolute -left-40 top-20 h-[480px] w-[480px] rounded-full border border-lime-300/10" />
-      <div className="hero-parallax-grid pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-50 fine-grid" />
+      <div className="hero-parallax-grid pointer-events-none absolute inset-0 fine-grid opacity-40" />
       <div className="relative mx-auto max-w-site px-5 py-16 sm:px-8 sm:py-20 lg:py-24 xl:py-28">
-        <div className="grid items-center gap-16 lg:grid-cols-[0.82fr_1.18fr] lg:gap-12 xl:gap-16">
-          <div className="hero-scroll-copy">
-            <div className="relative z-10">
-            <div className="mb-7 flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.2em] text-lime-300 sm:text-[10px]">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime-300 opacity-30" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-lime-300" />
-              </span>
-              An independent agent workspace
-            </div>
-            <h1 id="hero-title" aria-label="Your AI team. Your control." className="relative text-balance text-[clamp(3.2rem,5.3vw,4.85rem)] font-semibold leading-[0.99] tracking-[-0.06em] text-white">
-              <span className="motion-mask-frame block">
-                <span className="motion-mask-top-text block">Your AI team.</span>
-              </span>
-              <span className="motion-mask-divider" aria-hidden="true" />
-              <span className="motion-mask-frame mt-2 block text-lime-300">
-                <span className="motion-mask-bottom-text block">Your control.</span>
-              </span>
-            </h1>
-            <p className="mt-7 max-w-[34rem] text-base leading-7 text-slate-400 sm:text-[17px] sm:leading-8">
-              GMDA gives your AI agents one local-first home—each with its own personality, model, workspace, and tools. Delegate the work, follow every handoff, and review sensitive steps.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 min-[420px]:flex-row">
-              <a href="#product-preview" className="group flex min-h-12 items-center justify-center gap-3 rounded-xl bg-lime-300 px-5 text-sm font-bold text-ink-900 transition-all hover:bg-lime-400">
-                Explore the preview
-                <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
-              </a>
-              <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="group flex min-h-12 items-center justify-center gap-3 rounded-xl border border-white/[0.14] bg-white/[0.025] px-5 text-sm font-semibold text-slate-200 transition-all hover:border-lime-300/35 hover:bg-lime-300/[0.05] hover:text-lime-300">
-                <Github className="h-4 w-4" aria-hidden="true" />
-                View on GitHub
-                <ArrowUpRight className="h-3.5 w-3.5 text-slate-500 transition-colors group-hover:text-lime-300" aria-hidden="true" />
-              </a>
-            </div>
-            <div className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-[11px] text-slate-500">
-              <span className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-lime-300/70" aria-hidden="true" />Local-first by design</span>
-              <span className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-lime-300/70" aria-hidden="true" />Open-source core</span>
-              <span className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-lime-300/70" aria-hidden="true" />Independent project</span>
-            </div>
-            </div>
+        <div className="hero-scroll-copy relative z-10 mx-auto max-w-5xl text-center">
+          <div className="mb-7 flex items-center justify-center gap-3 font-mono text-[9px] uppercase tracking-[0.2em] text-lime-300 sm:text-[10px]">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime-300 opacity-30" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-lime-300" />
+            </span>
+            An independent agent workspace
           </div>
-
-          <div className="hero-scroll-visual">
-            <div className="preview-enter min-w-0 lg:-mr-10 xl:-mr-16">
-              <HeroWorkspace />
-            </div>
+          <h1 id="hero-title" aria-label="Your AI team. Your control." className="relative text-balance text-[clamp(3.2rem,8vw,6.75rem)] font-semibold leading-[0.99] tracking-[-0.06em] text-white">
+            <span className="motion-mask-frame block">
+              <span className="motion-mask-top-text block">Your AI team.</span>
+            </span>
+            <span className="motion-mask-divider" aria-hidden="true" />
+            <span className="motion-mask-frame mt-2 block text-lime-300">
+              <span className="motion-mask-bottom-text block">Your control.</span>
+            </span>
+          </h1>
+          <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-slate-400 sm:text-[17px] sm:leading-8">
+            GMDA gives your AI agents one local-first home—each with its own personality, model, workspace, and tools. Delegate the work, follow every handoff, and review sensitive steps.
+          </p>
+          <div className="mt-9 flex flex-col justify-center gap-3 min-[420px]:flex-row">
+            <a href="#product-preview" className="group flex min-h-12 items-center justify-center gap-3 rounded-xl bg-lime-300 px-5 text-sm font-bold text-ink-900 transition-all hover:bg-lime-400">
+              Explore the preview
+              <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
+            </a>
+            <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="group flex min-h-12 items-center justify-center gap-3 rounded-xl border border-white/[0.14] bg-white/[0.025] px-5 text-sm font-semibold text-slate-200 transition-all hover:border-lime-300/35 hover:bg-lime-300/[0.05] hover:text-lime-300">
+              <Github className="h-4 w-4" aria-hidden="true" />
+              View on GitHub
+              <ArrowUpRight className="h-3.5 w-3.5 text-slate-500 transition-colors group-hover:text-lime-300" aria-hidden="true" />
+            </a>
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-3 text-[11px] text-slate-500">
+            <span className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-lime-300/70" aria-hidden="true" />Local-first by design</span>
+            <span className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-lime-300/70" aria-hidden="true" />Open-source core</span>
+            <span className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-lime-300/70" aria-hidden="true" />Independent project</span>
           </div>
         </div>
 
-        <div className="mt-20 grid gap-5 border-t border-white/[0.09] pt-7 sm:grid-cols-3 lg:mt-24">
+        <div className="hero-scroll-visual mx-auto mt-16 max-w-6xl sm:mt-20 lg:mt-24">
+          <div className="preview-enter min-w-0">
+            <HeroWorkspace />
+          </div>
+        </div>
+
+        <div className="mt-16 grid gap-5 border-t border-white/[0.09] pt-7 sm:grid-cols-3 sm:mt-20">
           {[
             ['01', 'Multiple agents', 'One organized workspace'],
             ['02', 'Flexible foundations', 'Supported runtimes and providers'],
@@ -407,11 +405,37 @@ function Features() {
   )
 }
 
+function AgentJobsSection() {
+  return (
+    <section id="agent-jobs" className="light-section scroll-mt-20 border-t border-ink-900/10 bg-paper py-24 text-ink-900 sm:py-28 lg:py-32" aria-labelledby="agent-jobs-title">
+      <div className="mx-auto max-w-site px-5 sm:px-8">
+        <SectionIntro
+          titleId="agent-jobs-title"
+          index="03"
+          eyebrow="A job for every agent"
+          title="Give every agent a role of its own."
+          description="Pick a role to see its sample task, response, and review boundary. Every example uses the same local data as the interactive preview."
+          light
+        />
+        <div data-reveal="">
+          <AgentJobs />
+        </div>
+        <div data-reveal="" className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-2xl text-[11px] leading-5 text-ink-700">Illustrative role preview — sample data. Switching roles only changes this page; no agent runs and no information is sent.</p>
+          <a href="#product-preview" className="group inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-ink-900 px-4 text-xs font-semibold text-white transition-colors hover:bg-ink-850">
+            Try the interactive preview<ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function HowItWorks() {
   return (
     <section id="how-it-works" className="scroll-mt-20 border-t border-white/[0.06] bg-[#2A2A55] py-24 sm:py-28 lg:py-32" aria-labelledby="how-title">
       <div className="mx-auto max-w-site px-5 sm:px-8">
-        <SectionIntro titleId="how-title" index="03" eyebrow="From setup to supervised work" title="A clear path from hello to handoff." description="GMDA keeps the workflow legible: configure the foundation, shape your team, and decide what happens at sensitive moments." />
+        <SectionIntro titleId="how-title" index="04" eyebrow="From setup to supervised work" title="A clear path from hello to handoff." description="GMDA keeps the workflow legible: configure the foundation, shape your team, and decide what happens at sensitive moments." />
         <WorkflowScene />
         <div data-reveal="" className="mt-16 flex flex-col gap-5 rounded-2xl border border-lime-300/[0.13] bg-lime-300/[0.035] p-5 sm:flex-row sm:items-center sm:p-6 lg:mt-20">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-lime-300/10 text-lime-300"><Sparkles className="h-5 w-5" aria-hidden="true" /></span>
@@ -427,7 +451,7 @@ function ControlAndPrivacy() {
   return (
     <section id="control" className="light-section scroll-mt-20 bg-paper py-24 text-ink-900 sm:py-28 lg:py-32" aria-labelledby="control-title">
       <div className="mx-auto max-w-site px-5 sm:px-8">
-        <SectionIntro titleId="control-title" index="04" eyebrow="Control and privacy" title="Clarity about where your work goes." description="Local-first is about where your workspace lives—not a promise that every request stays on-device. GMDA makes those boundaries part of the product story." light scrollTitle />
+        <SectionIntro titleId="control-title" index="05" eyebrow="Control and privacy" title="Clarity about where your work goes." description="Local-first is about where your workspace lives—not a promise that every request stays on-device. GMDA makes those boundaries part of the product story." light scrollTitle />
 
         <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div data-reveal="">
@@ -572,6 +596,7 @@ export default function App() {
         </section>
 
         <Features />
+        <AgentJobsSection />
         <HowItWorks />
         <ControlAndPrivacy />
 
@@ -579,7 +604,7 @@ export default function App() {
           <div className="mx-auto max-w-site px-5 sm:px-8">
             <div className="grid gap-10 lg:grid-cols-[0.55fr_1fr] lg:gap-20">
               <div data-reveal="">
-                <div className="mb-5 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-lime-300/75"><span>05</span><span className="h-px w-8 bg-lime-300/30" /><span>Good questions</span></div>
+                <div className="mb-5 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-lime-300/75"><span>06</span><span className="h-px w-8 bg-lime-300/30" /><span>Good questions</span></div>
                 <h2 id="faq-title" className="text-4xl font-semibold tracking-[-0.045em] text-white sm:text-5xl">A few things worth making clear.</h2>
                 <p className="mt-5 max-w-md text-sm leading-7 text-slate-400">What GMDA is, what its name means, and where the local-first boundary sits.</p>
                 <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="group mt-7 inline-flex items-center gap-2 text-xs font-semibold text-lime-300">Explore the project on GitHub<ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" /></a>

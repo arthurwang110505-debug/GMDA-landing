@@ -108,8 +108,10 @@ button {
   position: absolute;
   z-index: 2;
   top: calc(50% - 3px);
+  right: 0;
   left: 0;
   width: min(380px, 85%);
+  margin-inline: auto;
   height: 6px;
   border-radius: 999px;
   background: #C8F23C;

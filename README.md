@@ -50,6 +50,7 @@ The included `vercel.json` also declares the framework, install command, build c
 - `src/App.tsx` — page sections, navigation, feature content, and footer
 - `src/components/HeroWorkspace.tsx` — static interface illustration
 - `src/components/ProductPreview.tsx` — interactive sample workspace
+- `src/components/AgentJobs.tsx` — keyboard-accessible, job-oriented sample role tabs
 - `src/components/WorkflowScene.tsx` — scroll-scrubbed desktop workflow with static mobile fallback
 - `src/components/ScrollProgress.tsx` — lightweight page reading-progress indicator
 - `src/components/Faq.tsx` — accessible FAQ accordion
