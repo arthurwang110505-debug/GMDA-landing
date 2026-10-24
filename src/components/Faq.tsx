@@ -55,15 +55,15 @@ export function Faq() {
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(isOpen ? null : index)}
               >
-                <span className="font-mono text-[10px] text-mint-300/60">0{index + 1}</span>
-                <span className="flex-1 text-base font-semibold tracking-[-0.02em] text-slate-100 transition-colors group-hover:text-mint-300 sm:text-lg">
+                <span className="font-mono text-[10px] text-lime-300/60">0{index + 1}</span>
+                <span className="flex-1 text-base font-semibold tracking-[-0.02em] text-slate-100 transition-colors group-hover:text-lime-300 sm:text-lg">
                   {faq.question}
                 </span>
                 <span
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                     isOpen
-                      ? 'rotate-180 border-mint-300/30 bg-mint-300/10 text-mint-300'
-                      : 'border-white/10 text-slate-400 group-hover:border-mint-300/30 group-hover:text-mint-300'
+                      ? 'rotate-180 border-lime-300/30 bg-lime-300/10 text-lime-300'
+                      : 'border-white/10 text-slate-400 group-hover:border-lime-300/30 group-hover:text-lime-300'
                   }`}
                 >
                   <ChevronDown className="h-4 w-4" aria-hidden="true" />

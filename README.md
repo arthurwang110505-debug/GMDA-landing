@@ -56,7 +56,11 @@ The included `vercel.json` also declares the framework, install command, build c
 - `src/hooks/useScrollMotion.ts` — requestAnimationFrame scroll motion and IntersectionObserver reveals
 - `src/data/preview.ts` — all sample agents, messages, tasks, and approvals
 - `src/index.css` — Tailwind layers, motion, focus states, and decorative grids
-- `public/app-icon.svg` — GMDA geometric G logo, sourced from the GMDA repository
+- `public/app-icon.svg` — official GMDA ink app icon from the GMDA brand kit
+
+## Brand palette
+
+The page follows the GMDA brand starter: **Ink `#14142B`** for surfaces and text, **Ink Soft `#2A2A55`** for dark UI layers, **Spark Lime `#C8F23C`** for accents and buttons with Ink text, **Paper `#F5F3EC`** for light sections, **Cloud White `#FFFFFF`**, and **Blush `#FF8F73`** as a restrained warm accent. Brand surfaces are flat rather than gradient or glow effects, and lime is not used for text on Paper.
 
 ## Accessibility and privacy
 

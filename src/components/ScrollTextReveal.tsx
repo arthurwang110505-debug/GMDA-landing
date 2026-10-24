@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react'
 // Motion Prompt #146 · MIT License (c) 2026 Shohei Ohtaki · https://showheyohtaki.github.io/motion-prompt/#146
 // The lp2 clamp, character staggering, color interpolation, and cubic ease-in-out
 // are ported from the catalog element and kit. Real scroll replaces the demo clock.
-const START_COLOR = [0x5f, 0x70, 0x67] as const
-const END_COLOR = [0x07, 0x1b, 0x19] as const
+const START_COLOR = [0x6b, 0x67, 0x80] as const
+const END_COLOR = [0x14, 0x14, 0x2b] as const
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
 const easeInOutCubic = (value: number) =>
   value < 0.5 ? 4 * value * value * value : 1 - Math.pow(-2 * value + 2, 3) / 2
@@ -67,7 +67,7 @@ export function ScrollTextReveal({ id, text, className }: { id: string; text: st
             {Array.from(word).map((character) => {
               const index = characterIndex++
               return (
-                <span key={`${character}-${index}`} data-scroll-char className="text-[#5f7067]">
+                <span key={`${character}-${index}`} data-scroll-char className="text-[#6B6780]">
                   {character}
                 </span>
               )
