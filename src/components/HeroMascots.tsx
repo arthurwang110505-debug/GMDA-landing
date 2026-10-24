@@ -1,165 +1,257 @@
-import { useEffect, useRef } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { ContactShadows } from '@react-three/drei'
+import { useMemo, useRef } from 'react'
+import * as THREE from 'three'
+import type { Group, Mesh, Vector3 } from 'three'
 
 type CreatureKind = 'mori' | 'pip' | 'koda' | 'milo'
 
-const mascots: { name: string; kind: CreatureKind; label: string }[] = [
-  { name: 'Mori', kind: 'mori', label: 'Research' },
-  { name: 'Pip', kind: 'pip', label: 'Writing' },
-  { name: 'Koda', kind: 'koda', label: 'Coding' },
-  { name: 'Milo', kind: 'milo', label: 'Monitoring' },
+type MascotConfig = {
+  kind: CreatureKind
+  name: string
+  color: string
+  position: [number, number, number]
+  scale: [number, number, number]
+  rotation: [number, number, number]
+}
+
+const mascots: MascotConfig[] = [
+  { name: 'Mori', kind: 'mori', color: '#F5F0E6', position: [-2.25, 0.55, 0], scale: [1.03, 0.88, 0.86], rotation: [-0.08, -0.18, -0.12] },
+  { name: 'Pip', kind: 'pip', color: '#FFD56B', position: [-0.75, 0.8, 0.1], scale: [0.88, 1.02, 0.86], rotation: [0.02, 0.1, 0.12] },
+  { name: 'Koda', kind: 'koda', color: '#8BC5FF', position: [0.75, 0.72, 0.05], scale: [0.94, 0.94, 0.82], rotation: [0, -0.08, -0.08] },
+  { name: 'Milo', kind: 'milo', color: '#C6A7FF', position: [2.25, 0.55, -0.02], scale: [0.94, 0.94, 0.9], rotation: [-0.03, 0.14, 0.1] },
 ]
 
-function MaterialDefs({ id }: { id: string }) {
+function seededNoise(x: number, y: number, z: number) {
+  return Math.sin(x * 7.31 + y * 13.17 + z * 19.73) * 0.5 + Math.sin(x * 17.13 - y * 5.41 + z * 11.27) * 0.25
+}
+
+function makeBlobGeometry(kind: CreatureKind) {
+  const geometry = new THREE.SphereGeometry(1, 64, 48)
+  const position = geometry.attributes.position
+  const v = new THREE.Vector3()
+
+  for (let i = 0; i < position.count; i += 1) {
+    v.fromBufferAttribute(position, i)
+    const n = seededNoise(v.x, v.y, v.z)
+    let deformation = 1 + n * 0.018
+
+    if (kind === 'mori') deformation += Math.max(0, v.y) * 0.025
+    if (kind === 'pip') deformation += Math.max(0, -v.y) * 0.035
+    if (kind === 'koda') deformation += Math.sin(v.y * 8) * 0.008
+    if (kind === 'milo') deformation += Math.cos(v.x * 7) * 0.01
+
+    v.multiplyScalar(deformation)
+    position.setXYZ(i, v.x, v.y, v.z)
+  }
+
+  position.needsUpdate = true
+  geometry.computeVertexNormals()
+  return geometry
+}
+
+function BodyMaterial({ color }: { color: string }) {
   return (
-    <defs>
-      <radialGradient id={`${id}-cream`} cx="28%" cy="18%" r="82%">
-        <stop offset="0" stopColor="#fffef9" />
-        <stop offset=".32" stopColor="#f8f3e8" />
-        <stop offset=".7" stopColor="#e5daca" />
-        <stop offset="1" stopColor="#b9aa98" />
-      </radialGradient>
-      <radialGradient id={`${id}-gold`} cx="26%" cy="15%" r="84%">
-        <stop offset="0" stopColor="#fff4bd" />
-        <stop offset=".3" stopColor="#ffe17c" />
-        <stop offset=".68" stopColor="#efb93e" />
-        <stop offset="1" stopColor="#bd7927" />
-      </radialGradient>
-      <radialGradient id={`${id}-blue`} cx="24%" cy="15%" r="88%">
-        <stop offset="0" stopColor="#e2f4ff" />
-        <stop offset=".28" stopColor="#a6d8ff" />
-        <stop offset=".68" stopColor="#6aabeb" />
-        <stop offset="1" stopColor="#3e6da8" />
-      </radialGradient>
-      <radialGradient id={`${id}-lilac`} cx="25%" cy="14%" r="86%">
-        <stop offset="0" stopColor="#f6edff" />
-        <stop offset=".3" stopColor="#d7c0ff" />
-        <stop offset=".7" stopColor="#a78ae4" />
-        <stop offset="1" stopColor="#7354ae" />
-      </radialGradient>
-      <linearGradient id={`${id}-shine`} x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stopColor="#fff" stopOpacity=".82" />
-        <stop offset=".42" stopColor="#fff" stopOpacity=".12" />
-        <stop offset="1" stopColor="#fff" stopOpacity="0" />
-      </linearGradient>
-      <linearGradient id={`${id}-edge`} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stopColor="#fff" stopOpacity=".35" />
-        <stop offset=".55" stopColor="#fff" stopOpacity="0" />
-        <stop offset="1" stopColor="#241d39" stopOpacity=".18" />
-      </linearGradient>
-      <filter id={`${id}-shadow`} x="-45%" y="-40%" width="190%" height="200%">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
-        <feOffset dy="5" />
-        <feComponentTransfer><feFuncA type="linear" slope=".24" /></feComponentTransfer>
-        <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
-      </filter>
-      <filter id={`${id}-soft`} x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur stdDeviation="1.1" />
-      </filter>
-    </defs>
+    <meshPhysicalMaterial
+      color={color}
+      roughness={0.34}
+      metalness={0.02}
+      clearcoat={0.42}
+      clearcoatRoughness={0.2}
+      sheen={0.16}
+      sheenRoughness={0.38}
+    />
   )
 }
 
-function Creature({ kind }: { kind: CreatureKind }) {
-  const id = `gmda-${kind}`
-  const fills = { mori: `url(#${id}-cream)`, pip: `url(#${id}-gold)`, koda: `url(#${id}-blue)`, milo: `url(#${id}-lilac)` }
-  const fill = fills[kind]
+function Eye({ position }: { position: [number, number, number] }) {
   return (
-    <svg viewBox="0 0 160 160" fill="none" role="presentation" aria-hidden="true">
-      <MaterialDefs id={id} />
-      <ellipse cx="80" cy="137" rx="42" ry="9" fill="#080817" opacity=".2" filter={`url(#${id}-soft)`} />
-      {kind === 'mori' && <g className="creature-antenna"><path d="M78 42 Q66 27 76 17" stroke="#5c9a4c" strokeWidth="7" strokeLinecap="round"/><circle cx="78" cy="16" r="9" fill="#a6df7e"/><circle cx="75" cy="13" r="3" fill="#efffe2"/></g>}
-      {kind === 'milo' && <g className="creature-antenna"><path d="M81 40 L82 25" stroke="#6d579d" strokeWidth="6" strokeLinecap="round"/><circle cx="82" cy="20" r="9" fill="#eee3ff"/><circle cx="79" cy="17" r="3" fill="#fff"/></g>}
-      <g filter={`url(#${id}-shadow)`}>
-        {kind === 'mori' && <path className="creature-body" d="M35 88 C29 66 43 49 61 49 C71 35 94 39 101 51 C124 50 137 72 126 96 C118 119 52 126 37 105 C33 100 32 94 35 88Z" fill={fill}/>}
-        {kind === 'pip' && <path className="creature-body" d="M81 35 C89 48 104 48 109 61 C130 67 132 89 120 107 C106 126 57 127 41 108 C25 90 35 67 51 61 C54 47 66 45 81 35Z" fill={fill}/>}
-        {kind === 'koda' && <path className="creature-body" d="M46 52 Q46 40 60 40 H101 Q116 40 116 55 V101 Q116 117 100 117 H62 Q45 117 45 101Z" fill={fill}/>}
-        {kind === 'milo' && <path className="creature-body" d="M81 39 C105 39 123 58 123 82 C123 106 104 123 81 123 C57 123 38 105 38 82 C38 58 57 39 81 39Z" fill={fill}/>}
-        <path d={kind === 'koda' ? 'M51 54 Q51 45 62 45 H99 Q109 45 109 56 V69 Q80 62 51 72Z' : 'M43 79 C43 59 58 48 73 48 C60 54 53 66 54 80 C55 99 70 113 89 115 C68 119 47 104 43 90Z'} fill={`url(#${id}-shine)`} opacity=".8"/>
-        <path d={kind === 'koda' ? 'M47 58 Q47 42 62 42 H100 Q114 42 114 57 V101 Q114 114 100 114 H62 Q48 114 48 101Z' : kind === 'pip' ? 'M81 35 C89 48 104 48 109 61 C130 67 132 89 120 107 C106 126 57 127 41 108 C25 90 35 67 51 61 C54 47 66 45 81 35Z' : kind === 'mori' ? 'M35 88 C29 66 43 49 61 49 C71 35 94 39 101 51 C124 50 137 72 126 96 C118 119 52 126 37 105 C33 100 32 94 35 88Z' : 'M81 39 C105 39 123 58 123 82 C123 106 104 123 81 123 C57 123 38 105 38 82 C38 58 57 39 81 39Z'} fill={`url(#${id}-edge)`} opacity=".9"/>
-        {kind === 'mori' && <path d="M45 63 Q50 53 62 54" stroke="#fff" strokeWidth="4" strokeLinecap="round" opacity=".8"/>}
-        {kind === 'pip' && <path d="M50 75 Q54 63 66 62" stroke="#fff9d9" strokeWidth="4" strokeLinecap="round" opacity=".8"/>}
-        {kind === 'koda' && <path d="M59 50 H80" stroke="#fff" strokeWidth="4" strokeLinecap="round" opacity=".7"/>}
-        {kind === 'milo' && <path d="M51 65 Q60 49 76 49" stroke="#fff" strokeWidth="4" strokeLinecap="round" opacity=".8"/>}
-        <g className="creature-eyes" fill="#29233e">
-          {kind === 'koda' ? <><ellipse cx="65" cy="78" rx="5" ry="7"/><ellipse cx="96" cy="78" rx="5" ry="7"/></> : <><ellipse cx="64" cy={kind === 'milo' ? 78 : 81} rx="5" ry="7"/><ellipse cx="96" cy={kind === 'milo' ? 78 : 81} rx="5" ry="7"/></>}
-        </g>
-        <circle cx="62" cy="78" r="1.7" fill="#fff" opacity=".95"/><circle cx="94" cy="78" r="1.7" fill="#fff" opacity=".95"/>
-        <path className="creature-mouth" d={kind === 'koda' ? 'M71 94 Q80 97 89 94' : 'M72 97 Q80 105 89 97'} stroke="#44324b" strokeWidth="3.2" strokeLinecap="round"/>
-        <ellipse cx="51" cy="94" rx="7" ry="4.5" fill="#f29da6" opacity=".58"/><ellipse cx="109" cy="94" rx="7" ry="4.5" fill="#f29da6" opacity=".58"/>
-        {kind === 'koda' && <g><rect x="63" y="104" width="34" height="7" rx="3.5" fill="#376da8" opacity=".8"/><circle className="creature-status-light" cx="112" cy="53" r="5" fill="#d8ff78"/></g>}
-        {kind === 'milo' && <path d="M80 60 V53 M76 56.5 H84" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity=".8"/>}
-      </g>
-      <ellipse cx="63" cy="120" rx="17" ry="3" fill="#fff" opacity=".12" filter={`url(#${id}-soft)`}/>
-    </svg>
+    <mesh position={position} scale={[0.105, 0.15, 0.075]}>
+      <sphereGeometry args={[1, 32, 24]} />
+      <meshPhysicalMaterial color="#29233E" roughness={0.2} clearcoat={0.75} clearcoatRoughness={0.08} />
+    </mesh>
   )
 }
 
-const reactionRadius = 170
+function EyeHighlight({ position }: { position: [number, number, number] }) {
+  return (
+    <mesh position={position}>
+      <sphereGeometry args={[0.026, 16, 12]} />
+      <meshBasicMaterial color="#FFFFFF" />
+    </mesh>
+  )
+}
+
+function Mouth({ kind }: { kind: CreatureKind }) {
+  const curve = useMemo(() => {
+    const points: THREE.Vector3[] = []
+    for (let i = 0; i <= 10; i += 1) {
+      const t = i / 10
+      const x = (t - 0.5) * 0.32
+      const y = kind === 'koda' ? -0.18 + Math.sin(t * Math.PI) * 0.035 : -0.18 - Math.sin(t * Math.PI) * 0.055
+      points.push(new THREE.Vector3(x, y, 0.955))
+    }
+    return new THREE.CatmullRomCurve3(points)
+  }, [kind])
+
+  const geometry = useMemo(() => new THREE.TubeGeometry(curve, 16, 0.018, 8, false), [curve])
+
+  return (
+    <mesh geometry={geometry}>
+      <meshBasicMaterial color="#44324B" />
+    </mesh>
+  )
+}
+
+function Blush({ position }: { position: [number, number, number] }) {
+  return (
+    <mesh position={position} scale={[0.17, 0.075, 0.02]}>
+      <sphereGeometry args={[1, 24, 16]} />
+      <meshBasicMaterial color="#F29DA6" transparent opacity={0.42} />
+    </mesh>
+  )
+}
+
+function Antenna({ kind }: { kind: CreatureKind }) {
+  const color = kind === 'mori' ? '#6FA956' : '#8067B2'
+  const tip = kind === 'mori' ? '#B8E98E' : '#EEE3FF'
+  const curve = useMemo(() => {
+    const points = kind === 'mori'
+      ? [new THREE.Vector3(0, 0.62, 0), new THREE.Vector3(-0.12, 0.88, 0), new THREE.Vector3(-0.02, 1.08, 0)]
+      : [new THREE.Vector3(0, 0.64, 0), new THREE.Vector3(0.02, 0.9, 0), new THREE.Vector3(0.02, 1.06, 0)]
+    return new THREE.CatmullRomCurve3(points)
+  }, [kind])
+  const geometry = useMemo(() => new THREE.TubeGeometry(curve, 24, 0.045, 12, false), [curve])
+
+  return (
+    <group>
+      <mesh geometry={geometry}>
+        <meshPhysicalMaterial color={color} roughness={0.42} clearcoat={0.3} />
+      </mesh>
+      <mesh position={kind === 'mori' ? [-0.02, 1.08, 0] : [0.02, 1.06, 0]}>
+        <sphereGeometry args={[0.11, 32, 24]} />
+        <meshPhysicalMaterial color={tip} roughness={0.26} clearcoat={0.5} />
+      </mesh>
+      <mesh position={kind === 'mori' ? [-0.055, 1.12, 0.075] : [-0.015, 1.1, 0.075]}>
+        <sphereGeometry args={[0.028, 16, 12]} />
+        <meshBasicMaterial color="#FFFFFF" />
+      </mesh>
+    </group>
+  )
+}
+
+function KodaDetail() {
+  return (
+    <>
+      <mesh position={[0, -0.42, 0.82]} scale={[0.28, 0.055, 0.035]}>
+        <sphereGeometry args={[1, 24, 16]} />
+        <meshPhysicalMaterial color="#376DA8" roughness={0.4} />
+      </mesh>
+      <mesh position={[0.55, 0.42, 0.58]}>
+        <sphereGeometry args={[0.07, 24, 16]} />
+        <meshBasicMaterial color="#D8FF78" />
+      </mesh>
+    </>
+  )
+}
+
+function MiloDetail() {
+  return (
+    <group position={[0, 0.12, 0.83]}>
+      <mesh rotation={[0, 0, Math.PI / 4]} scale={[0.13, 0.035, 0.025]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial color="#FFFFFF" transparent opacity={0.8} />
+      </mesh>
+      <mesh rotation={[0, 0, -Math.PI / 4]} scale={[0.13, 0.035, 0.025]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial color="#FFFFFF" transparent opacity={0.8} />
+      </mesh>
+    </group>
+  )
+}
+
+function Mascot({ config, pointer }: { config: MascotConfig; pointer: React.RefObject<Vector3> }) {
+  const group = useRef<Group>(null)
+  const mesh = useRef<Mesh>(null)
+  const geometry = useMemo(() => makeBlobGeometry(config.kind), [config.kind])
+
+  useFrame((state, delta) => {
+    if (!group.current) return
+    const targetX = pointer.current.x * 0.16
+    const targetY = pointer.current.y * 0.11
+    group.current.rotation.y = THREE.MathUtils.damp(group.current.rotation.y, config.rotation[1] + targetX, 4, delta)
+    group.current.rotation.x = THREE.MathUtils.damp(group.current.rotation.x, config.rotation[0] - targetY, 4, delta)
+    group.current.rotation.z = THREE.MathUtils.damp(group.current.rotation.z, config.rotation[2] - targetX * 0.35, 4, delta)
+    group.current.position.y = THREE.MathUtils.damp(
+      group.current.position.y,
+      config.position[1] + Math.sin(state.clock.elapsedTime * (config.kind === 'pip' ? 2.4 : 1.55) + config.position[0]) * (config.kind === 'pip' ? 0.07 : 0.035),
+      5,
+      delta,
+    )
+
+    if (mesh.current) {
+      const pulse = 1 + Math.sin(state.clock.elapsedTime * 1.2 + config.position[0]) * 0.008
+      mesh.current.scale.setScalar(pulse)
+    }
+  })
+
+  const isSquare = config.kind === 'koda'
+  const isRound = config.kind === 'milo'
+  const eyeY = isRound || isSquare ? 0.08 : 0.03
+
+  return (
+    <group ref={group} position={config.position} rotation={config.rotation} scale={config.scale}>
+      <group ref={mesh}>
+        <mesh geometry={geometry} scale={isSquare ? [1.03, 0.93, 0.92] : undefined}>
+          <BodyMaterial color={config.color} />
+        </mesh>
+        {config.kind === 'mori' || config.kind === 'milo' ? <Antenna kind={config.kind} /> : null}
+        <Eye position={[-0.24, eyeY, 0.91]} />
+        <Eye position={[0.24, eyeY, 0.91]} />
+        <EyeHighlight position={[-0.265, eyeY + 0.035, 0.974]} />
+        <EyeHighlight position={[0.215, eyeY + 0.035, 0.974]} />
+        <Mouth kind={config.kind} />
+        <Blush position={[-0.49, -0.08, 0.83]} />
+        <Blush position={[0.49, -0.08, 0.83]} />
+        {config.kind === 'koda' ? <KodaDetail /> : null}
+        {config.kind === 'milo' ? <MiloDetail /> : null}
+      </group>
+    </group>
+  )
+}
+
+function MascotStage() {
+  const pointer = useRef(new THREE.Vector3())
+
+  useFrame((state) => {
+    pointer.current.x = THREE.MathUtils.clamp((state.pointer.x - 0.5) * 2, -1, 1)
+    pointer.current.y = THREE.MathUtils.clamp((state.pointer.y - 0.5) * 2, -1, 1)
+  })
+
+  return (
+    <>
+      <ambientLight intensity={1.25} />
+      <hemisphereLight args={['#FFFFFF', '#17152C', 1.6]} />
+      <directionalLight position={[-4, 5, 5]} intensity={4.8} color="#FFF8ED" castShadow />
+      <directionalLight position={[4, 2, 2]} intensity={2.2} color="#C8D9FF" />
+      <spotLight position={[0, 5, 4]} intensity={3.5} angle={0.55} penumbra={0.85} color="#FFFFFF" />
+      {mascots.map((config) => <Mascot key={config.kind} config={config} pointer={pointer} />)}
+      <ContactShadows position={[0, -0.43, 0]} opacity={0.34} scale={7.2} blur={2.8} far={3.2} resolution={512} />
+    </>
+  )
+}
 
 export function HeroMascots() {
-  const clusterRef = useRef<HTMLSpanElement>(null)
-  useEffect(() => {
-    const cluster = clusterRef.current
-    if (!cluster) return
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const precisePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
-    if (reducedMotion.matches || !precisePointer.matches) return
-    const items = Array.from(cluster.querySelectorAll<HTMLElement>('.hero-mascot')).map((mascot) => ({
-      mascot, interaction: mascot.querySelector<HTMLElement>('.hero-mascot-interaction'),
-    }))
-    let pointer: { x: number; y: number } | null = null
-    let frame = 0
-    const reset = () => items.forEach(({ interaction }) => {
-      if (!interaction) return
-      interaction.style.setProperty('--mascot-react-x', '0px')
-      interaction.style.setProperty('--mascot-react-y', '0px')
-      interaction.style.setProperty('--mascot-react-scale', '1')
-      interaction.style.setProperty('--mascot-react-tilt', '0deg')
-      interaction.style.setProperty('--mascot-near', '0')
-    })
-    const update = () => {
-      frame = 0
-      if (!pointer) { reset(); return }
-      items.forEach(({ mascot, interaction }) => {
-        if (!interaction) return
-        const bounds = mascot.getBoundingClientRect()
-        const dx = pointer!.x - (bounds.left + bounds.width / 2)
-        const dy = pointer!.y - (bounds.top + bounds.height / 2)
-        const distance = Math.hypot(dx, dy)
-        const proximity = Math.max(0, 1 - distance / reactionRadius)
-        const strength = proximity * proximity * (3 - 2 * proximity)
-        interaction.style.setProperty('--mascot-react-x', `${(distance ? dx / distance : 0) * strength * 8}px`)
-        interaction.style.setProperty('--mascot-react-y', `${(distance ? dy / distance : 0) * strength * 8}px`)
-        interaction.style.setProperty('--mascot-react-scale', `${1 + strength * .12}`)
-        interaction.style.setProperty('--mascot-react-tilt', `${Math.max(-8, Math.min(8, dx * .06)) * strength}deg`)
-        interaction.style.setProperty('--mascot-near', strength.toFixed(3))
-      })
-    }
-    const schedule = () => { if (!frame) frame = window.requestAnimationFrame(update) }
-    const move = (event: PointerEvent) => { if (event.pointerType !== 'touch') { pointer = { x: event.clientX, y: event.clientY }; schedule() } }
-    const leave = () => { pointer = null; schedule() }
-    window.addEventListener('pointermove', move, { passive: true })
-    window.addEventListener('blur', leave)
-    document.documentElement.addEventListener('mouseleave', leave)
-    return () => {
-      window.removeEventListener('pointermove', move)
-      window.removeEventListener('blur', leave)
-      document.documentElement.removeEventListener('mouseleave', leave)
-      if (frame) window.cancelAnimationFrame(frame)
-      reset()
-    }
-  }, [])
-
   return (
-    <span ref={clusterRef} className="hero-mascot-cluster" aria-hidden="true">
-      <span className="hero-mascot-surge" />
-      {mascots.map(({ name, kind }) => (
-        <span key={name} className={`hero-mascot hero-mascot-${kind}`} data-mascot={kind}>
-          <span className="hero-mascot-interaction">
-            <span className="hero-mascot-float"><Creature kind={kind} /></span>
-          </span>
-        </span>
-      ))}
+    <span className="hero-mascot-cluster" aria-hidden="true">
+      <Canvas
+        className="hero-mascot-canvas"
+        dpr={[1, 1.75]}
+        camera={{ position: [0, 0.7, 7.2], fov: 30 }}
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      >
+        <MascotStage />
+      </Canvas>
     </span>
   )
 }
