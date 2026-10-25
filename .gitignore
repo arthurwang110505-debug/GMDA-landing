@@ -7,3 +7,7 @@ dist/
 .env.*
 !.env.example
 /concepts/
+
+# python caches
+__pycache__/
+*.pyc
