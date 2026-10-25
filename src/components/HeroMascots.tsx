@@ -1,214 +1,131 @@
-import { useEffect, useRef } from 'react'
+import { Component, useEffect, useRef, type ReactNode } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { AdaptiveDpr, ContactShadows, Preload } from '@react-three/drei'
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
-import { buildCast, fitCamera, SCALES } from './mascotCast'
+import { Koda, Milo, Mori, Pip, usePrefersReducedMotion } from './mascots'
 
-export function HeroMascots() {
-  const wrapRef = useRef<HTMLSpanElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+/** camera + WebGL resilience wrap */
 
+class MascotBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+  render() {
+    return this.state.failed ? null : this.props.children
+  }
+}
+
+function CameraRig() {
+  const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera
+  const size = useThree((s) => s.size)
   useEffect(() => {
-    const wrap = wrapRef.current
-    const canvas = canvasRef.current
-    if (!wrap || !canvas) return
+    const aspect = size.width / Math.max(1, size.height)
+    camera.fov = 32
+    camera.aspect = aspect
+    const vFov = (camera.fov * Math.PI) / 180
+    const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect)
+    const dist = THREE.MathUtils.clamp(9.4 / 2 / Math.tan(hFov / 2), 4.8, 12)
+    camera.position.set(0, 2.3, dist)
+    camera.lookAt(0, 1.35, 0)
+    camera.updateProjectionMatrix()
+  }, [camera, size])
+  return null
+}
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const precisePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
-
-    let renderer: THREE.WebGLRenderer
-    try {
-      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
-    } catch {
-      canvas.style.display = 'none'
-      return
-    }
-    renderer.setClearColor(0x000000, 0)
-    renderer.outputColorSpace = THREE.SRGBColorSpace
-    renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.05
-    renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap
-
-    const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(32, 4, 0.1, 60)
-    fitCamera(camera, 4)
-
-    // studio IBL — soft room reflections give the silicone/vinyl its sheen
-    const pmrem = new THREE.PMREMGenerator(renderer)
-    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+/** soft studio IBL — room reflections give the vinyl its sheen */
+function StudioEnvironment() {
+  const gl = useThree((s) => s.gl)
+  const scene = useThree((s) => s.scene)
+  useEffect(() => {
+    const pmrem = new THREE.PMREMGenerator(gl)
+    const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+    scene.environment = env
     scene.environmentIntensity = 0.5
-
-    // three-point studio lighting on top of the IBL
-    const hemi = new THREE.HemisphereLight(0xfff2e0, 0x22303a, 0.28)
-    const key = new THREE.DirectionalLight(0xffe6c4, 1.35)
-    key.position.set(-4.5, 6, 5.5)
-    key.castShadow = true
-    key.shadow.mapSize.set(2048, 2048)
-    key.shadow.camera.left = -6
-    key.shadow.camera.right = 6
-    key.shadow.camera.top = 5
-    key.shadow.camera.bottom = -2
-    key.shadow.camera.near = 1
-    key.shadow.camera.far = 20
-    key.shadow.bias = -0.0004
-    const fill = new THREE.DirectionalLight(0xb8c8ff, 0.42)
-    fill.position.set(5, 2.5, 4)
-    const rim = new THREE.DirectionalLight(0xffffff, 0.75)
-    rim.position.set(0, 5, -6)
-    const ambient = new THREE.AmbientLight(0xffffff, 0.12)
-    scene.add(hemi, key, fill, rim, ambient)
-
-    const { root, rigs, sparkles } = buildCast()
-    scene.add(root)
-
-    // shadow catcher below the cast
-    const ground = new THREE.Mesh(new THREE.PlaneGeometry(30, 12), new THREE.ShadowMaterial({ opacity: 0.15 }))
-    ground.rotation.x = -Math.PI / 2
-    ground.position.y = 0.28
-    ground.receiveShadow = true
-    scene.add(ground)
-
-    const resize = () => {
-      const w = wrap.clientWidth
-      const h = wrap.clientHeight
-      if (!w || !h) return
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-      renderer.setSize(w, h, false)
-      camera.aspect = w / h
-      fitCamera(camera, camera.aspect)
-    }
-    resize()
-    const observer = new ResizeObserver(resize)
-    observer.observe(wrap)
-
-    // pointer proximity reactions (fine pointers only)
-    const pointer = { x: -1e4, y: -1e4 }
-    const onPointerMove = (event: PointerEvent) => {
-      if (event.pointerType === 'touch') return
-      const rect = wrap.getBoundingClientRect()
-      pointer.x = event.clientX - rect.left
-      pointer.y = event.clientY - rect.top
-    }
-    const onPointerLeave = () => {
-      pointer.x = -1e4
-      pointer.y = -1e4
-    }
-    const interactive = precisePointer.matches && !reducedMotion.matches
-    if (interactive) {
-      window.addEventListener('pointermove', onPointerMove, { passive: true })
-      window.addEventListener('blur', onPointerLeave)
-    }
-
-    const clock = new THREE.Clock()
-    const worldPos = new THREE.Vector3()
-    const projected = new THREE.Vector3()
-    let frame = 0
-    let disposed = false
-
-    const tick = () => {
-      if (disposed) return
-      frame = window.requestAnimationFrame(tick)
-      const t = clock.getElapsedTime()
-      const still = reducedMotion.matches
-
-      rigs.forEach((rig) => {
-        const g = rig.group
-        const baseY = g.userData.baseY as number
-        const baseX = g.userData.baseX as number
-        const baseRotY = g.userData.baseRotY as number
-        const idle = still ? 0 : Math.sin(t * rig.bobSpeed + rig.phase)
-
-        g.position.y = baseY + idle * rig.bobAmp
-        g.rotation.z = (still ? 0 : Math.sin(t * rig.bobSpeed * 0.8 + rig.phase + 1.2)) * rig.sway
-
-        if (rig.blinkParts && !still) {
-          const cycle = (t + rig.blinkOffset) % rig.blinkRate
-          const blink = cycle < 0.13 ? Math.sin((cycle / 0.13) * Math.PI) : 0
-          rig.blinkParts.scale.y = 1 - blink * 0.88
-        }
-
-        if (rig.dartParts && !still) {
-          const glance = Math.sin(t * 0.55 + rig.phase) * 0.022
-          rig.dartParts.forEach((p) => {
-            p.position.x = p.userData.baseX ?? (p.userData.baseX = p.position.x)
-            p.position.x += glance
-          })
-        }
-
-        if (rig.wiggle && !still) {
-          rig.wiggle.rotation.z = Math.sin(t * 1.4 + rig.phase) * 0.07
-        }
-
-        if (rig.glow && !still) {
-          const mat = rig.glow.material as THREE.MeshPhysicalMaterial
-          mat.emissiveIntensity = 0.75 + 0.35 * (0.5 + 0.5 * Math.sin(t * 2.2))
-        }
-
-        if (interactive) {
-          worldPos.set(0, 1, 0)
-          g.localToWorld(worldPos)
-          projected.copy(worldPos).project(camera)
-          const rect = wrap.getBoundingClientRect()
-          const sx = (projected.x * 0.5 + 0.5) * rect.width
-          const sy = (-projected.y * 0.5 + 0.5) * rect.height
-          const dx = pointer.x - sx
-          const dy = pointer.y - sy
-          const dist = Math.hypot(dx, dy)
-          const reach = Math.max(rect.width * 0.14, 130)
-          const strength = Math.max(0, 1 - dist / reach)
-          const eased = strength * strength * (3 - 2 * strength)
-
-          const leanX = (dx / (rect.width || 1)) * eased * 0.45
-          const targetRotY = baseRotY + eased * Math.sign(dx || 1) * 0.2
-          g.position.x = THREE.MathUtils.lerp(g.position.x, baseX + leanX, 0.1)
-          g.rotation.y = THREE.MathUtils.lerp(g.rotation.y, targetRotY, 0.1)
-          const targetScale = SCALES[rig.kind] * (1 + eased * 0.06)
-          g.scale.setScalar(THREE.MathUtils.lerp(g.scale.x, targetScale, 0.1))
-        } else {
-          g.position.x = THREE.MathUtils.lerp(g.position.x, baseX, 0.1)
-          g.rotation.y = THREE.MathUtils.lerp(g.rotation.y, baseRotY, 0.1)
-          g.scale.setScalar(THREE.MathUtils.lerp(g.scale.x, SCALES[rig.kind], 0.1))
-        }
-      })
-
-      if (!still) {
-        sparkles.forEach((s, i) => {
-          const mat = s.material as THREE.MeshBasicMaterial
-          s.rotation.y = t * 0.5 + i
-          const tw = 0.65 + 0.35 * Math.sin(t * 1.3 + i * 1.7)
-          mat.opacity = 0.35 + 0.5 * tw
-          const base = 0.11 + 0.03 * (i % 2)
-          s.scale.setScalar(base * (0.85 + 0.3 * tw))
-        })
-      }
-
-      renderer.render(scene, camera)
-    }
-
-    tick()
-
     return () => {
-      disposed = true
-      window.cancelAnimationFrame(frame)
-      observer.disconnect()
-      window.removeEventListener('pointermove', onPointerMove)
-      window.removeEventListener('blur', onPointerLeave)
-      scene.traverse((obj) => {
-        const mesh = obj as THREE.Mesh
-        if (mesh.geometry) mesh.geometry.dispose()
-        const material = mesh.material as THREE.Material | THREE.Material[] | undefined
-        if (Array.isArray(material)) material.forEach((m) => m.dispose())
-        else material?.dispose()
-      })
-      renderer.dispose()
+      scene.environment = null
+      env.dispose()
       pmrem.dispose()
     }
-  }, [])
+  }, [gl, scene])
+  return null
+}
 
+/** the whole team leans a hair toward the cursor — alive, never distracting */
+function CastTilt({ reduced, children }: { reduced: boolean; children: ReactNode }) {
+  const group = useRef<THREE.Group>(null)
+  useFrame((state) => {
+    if (!group.current || reduced) return
+    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, state.pointer.x * 0.045, 0.04)
+    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -state.pointer.y * 0.028, 0.04)
+  })
+  return <group ref={group}>{children}</group>
+}
+
+function StudioLights() {
   return (
-    <span ref={wrapRef} className="hero-mascot-cluster" aria-hidden="true">
+    <>
+      <hemisphereLight args={[0xfff2e0, 0x22303a, 0.28]} />
+      <directionalLight
+        position={[-4.5, 6, 5.5]}
+        intensity={1.35}
+        color="#ffe6c4"
+        castShadow
+        shadow-mapSize={[2048, 2048]}
+        shadow-bias={-0.0004}
+        shadow-camera-left={-6}
+        shadow-camera-right={6}
+        shadow-camera-top={5}
+        shadow-camera-bottom={-2}
+        shadow-camera-near={1}
+        shadow-camera-far={20}
+      />
+      <directionalLight position={[5, 2.5, 4]} intensity={0.42} color="#b8c8ff" />
+      <directionalLight position={[0, 5, -6]} intensity={0.75} color="#ffffff" />
+      <ambientLight intensity={0.12} />
+    </>
+  )
+}
+
+function Cast({ reduced }: { reduced: boolean }) {
+  return (
+    <CastTilt reduced={reduced}>
+      <Mori position={[-3.2, 0.34, 0.22]} rotation={[0, 0.22, 0]} scale={1.04} reduced={reduced} />
+      <Pip position={[-1.12, 0.3, 0.1]} rotation={[0, 0.1, 0]} scale={0.95} reduced={reduced} />
+      <Koda position={[1.12, 0.3, -0.1]} rotation={[0, -0.1, 0]} scale={0.92} reduced={reduced} />
+      <Milo position={[3.2, 0.34, -0.22]} rotation={[0, -0.22, 0]} scale={1} reduced={reduced} />
+    </CastTilt>
+  )
+}
+
+export function HeroMascots() {
+  const reduced = usePrefersReducedMotion()
+  return (
+    <span className="hero-mascot-cluster" aria-hidden="true">
       <span className="hero-mascot-surge" />
-      <canvas ref={canvasRef} className="hero-mascot-canvas" />
+      <MascotBoundary>
+        <Canvas
+          className="hero-mascot-canvas"
+          dpr={[1, 2]}
+          shadows="soft"
+          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+          camera={{ fov: 32, position: [0, 2.3, 8] }}
+          onCreated={({ gl }) => {
+            gl.setClearColor(0x000000, 0)
+            gl.toneMapping = THREE.ACESFilmicToneMapping
+            gl.toneMappingExposure = 1.05
+          }}
+        >
+          <CameraRig />
+          <StudioEnvironment />
+          <StudioLights />
+          <Cast reduced={reduced} />
+          <ContactShadows position={[0, 0.16, 0]} opacity={0.5} scale={13} blur={2.7} far={3.4} color="#0a1c22" />
+          <AdaptiveDpr />
+          <Preload all />
+        </Canvas>
+      </MascotBoundary>
     </span>
   )
 }
