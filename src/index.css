@@ -170,6 +170,23 @@ button {
     motion-mask-line-shrink 0.25s 2.05s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
+/* theme-aware transparent wordmark (light surfaces get the deep-tone variant) */
+.brand-mark-light {
+  display: none;
+}
+:root[data-theme='light'] .brand-mark-dark {
+  display: none;
+}
+:root[data-theme='light'] .brand-mark-light {
+  display: block;
+}
+.brand-on-light .brand-mark-dark {
+  display: none;
+}
+.brand-on-light .brand-mark-light {
+  display: block;
+}
+
 .hero-mascot-cluster {
   pointer-events: none;
   position: absolute;

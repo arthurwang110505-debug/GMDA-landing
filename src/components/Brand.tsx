@@ -3,15 +3,28 @@ type BrandProps = {
   light?: boolean
 }
 
+/**
+ * GMDA wordmark. Transparent vector logo (background removed); the theme-appropriate
+ * variant is shown automatically (deep-tone letters on light surfaces).
+ */
 export function Brand({ compact = false, light = false }: BrandProps) {
+  const size = compact ? 'h-10' : 'h-12'
   return (
-    <span className="inline-flex items-center gap-3">
+    <span className={`inline-flex items-center gap-3 ${light ? 'brand-on-light' : ''}`}>
       <img
-        src="/gmda-logo.png"
+        src="/gmda-logo.svg"
         alt="GMDA"
-        className={compact ? 'h-8 w-auto' : 'h-10 w-auto'}
-        width={compact ? 74 : 92}
-        height={compact ? 32 : 40}
+        className={`brand-mark brand-mark-dark ${size} w-auto`}
+        width={111}
+        height={48}
+        draggable={false}
+      />
+      <img
+        src="/gmda-logo-light.svg"
+        alt="GMDA"
+        className={`brand-mark brand-mark-light ${size} w-auto`}
+        width={111}
+        height={48}
         draggable={false}
       />
       {!compact && (
