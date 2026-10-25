@@ -1,12 +1,18 @@
 import { useEffect, useRef } from 'react'
+import { PixelMascot } from './PixelMascot'
+import type { MascotId } from '../data/mascots'
 
-const mascots = [
-  { name: 'ink', src: '/gmda-mascot-ink.svg' },
-  { name: 'coral', src: '/gmda-mascot-coral.svg' },
-  { name: 'spark', src: '/gmda-mascot-spark.svg' },
-  { name: 'blush', src: '/gmda-mascot-blush.svg' },
-  { name: 'lime', src: '/gmda-mascot-lime.svg' },
-] as const
+/**
+ * Four identity slots around the headline. Position, rotation and float delay
+ * are declared in CSS via `hero-mascot-${id}`; the character artwork itself
+ * comes from the shared pixel maps in `src/data/mascots.ts`.
+ */
+const heroSlots: { id: MascotId; blinkDelay: number }[] = [
+  { id: 'mori', blinkDelay: 0 },
+  { id: 'pip', blinkDelay: -1.3 },
+  { id: 'koda', blinkDelay: -2.7 },
+  { id: 'milo', blinkDelay: -4.1 },
+]
 
 const reactionRadius = 170
 
@@ -100,11 +106,11 @@ export function HeroMascots() {
   return (
     <span ref={clusterRef} className="hero-mascot-cluster" aria-hidden="true">
       <span className="hero-mascot-surge" />
-      {mascots.map((mascot) => (
-        <span key={mascot.name} className={`hero-mascot hero-mascot-${mascot.name}`}>
+      {heroSlots.map(({ id, blinkDelay }) => (
+        <span key={id} className={`hero-mascot hero-mascot-${id}`}>
           <span className="hero-mascot-interaction">
             <span className="hero-mascot-float">
-              <img src={mascot.src} alt="" width="256" height="256" draggable={false} />
+              <PixelMascot id={id} animated blinkDelay={blinkDelay} />
             </span>
           </span>
         </span>

@@ -8,11 +8,13 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty false",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "mascots:build": "node scripts/build-mascots.mjs"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.2.5",
     "@fontsource/ibm-plex-mono": "^5.2.5",
+    "@fontsource/silkscreen": "^5.3.0",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

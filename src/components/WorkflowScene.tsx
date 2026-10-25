@@ -53,7 +53,7 @@ function RuntimeVisual() {
         <div className="flex flex-1 items-center justify-center gap-4 py-5">
           <div className="relative">
             <div className="absolute -inset-5 rounded-full border border-dashed border-accent/15 runtime-orbit" />
-            <img src="/app-icon.svg" alt="" className="relative h-14 w-14 rounded-2xl " />
+            <img src="/gmda-pixel-icon.svg" alt="" className="relative h-14 w-14 rounded-2xl " />
           </div>
           <div>
             <div className="font-mono text-xs font-medium tracking-[0.18em] text-primary">GMDA</div>

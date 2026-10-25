@@ -49,7 +49,58 @@
   --slate-600: 90 85 107;
   --slate-700: 90 85 107;
 
+  /* Pixel mascots: ink pupils on paper, brighter ivory eye glints. */
+  --pixel-eye: #14142B;
+  --pixel-edge: #14142B;
+  --pixel-ivory: #FFFFFF;
+  --mascot-mori: #F5F0E6;
+
   color-scheme: light;
+}
+
+/* ---------------------------------------------------------------------------
+   Pixel mascots — one 12x12 ASCII map per character, rendered as SVG rects.
+   Colors are theme tokens so the same map works on every surface.
+   --------------------------------------------------------------------------- */
+:root,
+:root[data-theme='dark'] {
+  --pixel-lime: #C8F23C;
+  --pixel-ivory: #F5F3EC;
+  --pixel-slate: #A8A5BC;
+  --pixel-eye: #2A2A55;
+  --pixel-edge: #2A2A55;
+  --mascot-mori: #F5F0E6;
+  --mascot-pip: #FFD56B;
+  --mascot-koda: #8BC5FF;
+  --mascot-milo: #C6A7FF;
+}
+
+.pixel-mascot {
+  display: block;
+  overflow: visible;
+  image-rendering: pixelated;
+}
+
+.pixel-frame--blink { opacity: 0; }
+
+.pixel-mascot--animated .pixel-frame--idle {
+  animation: pixel-blink-idle 5.4s steps(1, end) var(--pixel-blink-delay, 0s) infinite;
+}
+
+.pixel-mascot--animated .pixel-frame--blink {
+  animation: pixel-blink-closed 5.4s steps(1, end) var(--pixel-blink-delay, 0s) infinite;
+}
+
+@keyframes pixel-blink-idle {
+  0%, 91% { opacity: 1; }
+  92%, 96% { opacity: 0; }
+  97%, 100% { opacity: 1; }
+}
+
+@keyframes pixel-blink-closed {
+  0%, 91% { opacity: 0; }
+  92%, 96% { opacity: 1; }
+  97%, 100% { opacity: 0; }
 }
 
 html {
@@ -192,7 +243,8 @@ button {
   --mascot-rotate: 0deg;
   position: absolute;
   display: block;
-  width: clamp(2.75rem, 4vw, 3.5rem);
+  /* 12 tiles × integer-ish px keeps the colour blocks crisp */
+  width: clamp(3rem, 4.6vw, 4.25rem);
   aspect-ratio: 1;
   transform: rotate(var(--mascot-rotate));
 }
@@ -229,50 +281,43 @@ button {
   animation: hero-mascot-float 7s ease-in-out infinite;
 }
 
-.hero-mascot img {
+.hero-mascot .pixel-mascot {
   display: block;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 9px 9px rgba(0, 0, 0, 0.22));
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.22));
   user-select: none;
 }
 
-.hero-mascot-ink {
+/* Four identity slots — data-driven from HeroMascots.tsx heroSlots. */
+.hero-mascot-mori {
   --mascot-rotate: -11deg;
-  bottom: 0.5rem;
-  left: -4rem;
+  bottom: 0.25rem;
+  left: -4.5rem;
 }
 
-.hero-mascot-coral {
-  --mascot-rotate: -9deg;
+.hero-mascot-pip {
+  --mascot-rotate: -8deg;
   top: -4rem;
-  left: 12%;
+  left: 13%;
 }
 
-.hero-mascot-spark {
-  --mascot-rotate: 6deg;
-  top: -4.5rem;
-  left: 50%;
-  transform: translateX(-50%) rotate(var(--mascot-rotate));
-}
-
-.hero-mascot-blush {
-  --mascot-rotate: 10deg;
+.hero-mascot-koda {
+  --mascot-rotate: 8deg;
   top: -4rem;
-  right: 12%;
+  right: 13%;
 }
 
-.hero-mascot-lime {
+.hero-mascot-milo {
   --mascot-rotate: 12deg;
-  top: 1rem;
-  right: -4rem;
+  bottom: 0.25rem;
+  right: -4.5rem;
 }
 
-.hero-mascot-ink .hero-mascot-float { animation-delay: -4.5s; }
-.hero-mascot-coral .hero-mascot-float { animation-delay: -2.2s; }
-.hero-mascot-spark .hero-mascot-float { animation-delay: -1s; }
-.hero-mascot-blush .hero-mascot-float { animation-delay: -3.4s; }
-.hero-mascot-lime .hero-mascot-float { animation-delay: -5.6s; }
+.hero-mascot-mori .hero-mascot-float { animation-delay: -4.5s; }
+.hero-mascot-pip .hero-mascot-float { animation-delay: -2.2s; }
+.hero-mascot-koda .hero-mascot-float { animation-delay: -1s; }
+.hero-mascot-milo .hero-mascot-float { animation-delay: -5.6s; }
 
 @keyframes hero-mascots-surround {
   0% { opacity: 0; transform: scale(0.18) rotate(-7deg); }
@@ -293,22 +338,20 @@ button {
 
 @media (max-width: 639px) {
   .hero-mascot {
-    width: 1.75rem;
+    width: 2.5rem;
   }
 
-  .hero-mascot-ink,
-  .hero-mascot-coral,
-  .hero-mascot-spark,
-  .hero-mascot-blush,
-  .hero-mascot-lime {
+  .hero-mascot-mori,
+  .hero-mascot-pip,
+  .hero-mascot-koda,
+  .hero-mascot-milo {
     bottom: auto;
   }
 
-  .hero-mascot-ink { top: -2.75rem; left: 0; }
-  .hero-mascot-coral { top: -3.5rem; left: 22%; }
-  .hero-mascot-spark { top: -3.75rem; }
-  .hero-mascot-blush { top: -3.5rem; right: 22%; }
-  .hero-mascot-lime { top: -2.75rem; right: 0; }
+  .hero-mascot-mori { top: -3rem; left: 0; }
+  .hero-mascot-pip { top: -3.75rem; left: 24%; }
+  .hero-mascot-koda { top: -3.75rem; right: 24%; }
+  .hero-mascot-milo { top: -3rem; right: 0; }
 }
 
 @keyframes motion-mask-top {
@@ -622,6 +665,15 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .pixel-mascot--animated .pixel-frame--idle,
+  .pixel-mascot--animated .pixel-frame--blink {
+    animation: none;
+  }
+
+  .pixel-frame--blink {
+    display: none;
+  }
+
   .hero-mascot-cluster,
   .hero-mascot-float {
     animation: none;
@@ -694,4 +746,90 @@ button {
     clip-path: none;
     translate: none;
   }
+}
+
+/* Pixel world: crisp UI geometry, game-like type and discrete motion.
+   Body copy stays in Manrope for comfortable long-form reading. */
+:root { --font-pixel: 'Silkscreen', 'IBM Plex Mono', monospace; }
+
+#root h1, #root h2, #root h3,
+#root button, #root nav, #root .font-mono {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+
+#hero-title {
+  font-size: clamp(1.8rem, 5.5vw, 4.5rem);
+  line-height: 1.18;
+  letter-spacing: -0.065em;
+}
+
+#root h2 { line-height: 1.25; }
+
+/* Include arbitrary Tailwind radii and SVG icon paths, not only theme radii. */
+#root [class*='rounded'], #root button, #root input, #root summary {
+  border-radius: 0;
+}
+#root .lucide {
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+#root button, #root a[class*='bg-lime'], #root a[class*='border'] {
+  box-shadow: 4px 4px 0 rgb(var(--color-accent) / 0.22);
+  transition: transform 120ms steps(2, end), box-shadow 120ms steps(2, end), background-color 120ms steps(2, end);
+}
+#root button:hover, #root a[class*='bg-lime']:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgb(var(--color-accent) / 0.3);
+}
+#root button:active, #root a[class*='bg-lime']:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+#root :focus-visible { outline: 3px dashed rgb(var(--color-accent)); outline-offset: 5px; }
+
+.fine-grid {
+  background-size: 24px 24px;
+  background-image:
+    linear-gradient(rgb(var(--color-accent) / 0.065) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--color-accent) / 0.065) 1px, transparent 1px);
+}
+.hero-scroll-orb { display: none; }
+
+/* A large dedicated character row avoids crowding the headline on mobile. */
+.hero-mascot-cluster {
+  position: relative;
+  inset: auto;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: clamp(0px, 2vw, 24px);
+  margin: 0 auto 16px;
+  width: 100%;
+  animation: hero-mascots-surround 700ms steps(6, end) both;
+}
+.hero-mascot-cluster .hero-mascot {
+  position: relative;
+  inset: auto;
+  width: clamp(64px, 15vw, 168px);
+  flex: 0 0 auto;
+  transform: none;
+}
+.hero-mascot-surge { display: none; }
+.hero-mascot-interaction::after { border-radius: 0; border-style: dashed; }
+.hero-mascot-cluster .pixel-mascot { filter: none; }
+.hero-mascot-float { animation-timing-function: steps(4, end); }
+.hero-mascot-interaction { transition-timing-function: steps(3, end); }
+
+@media (max-width: 639px) {
+  #root h2 { font-size: clamp(1.4rem, 6vw, 2rem); }
+  .hero-mascot-cluster { margin-bottom: 24px; gap: 4px; }
+  .hero-mascot-cluster .hero-mascot { width: clamp(64px, 21vw, 112px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-mascot-cluster, .hero-mascot-float { animation: none; }
+  #root button:hover, #root a[class*='bg-lime']:hover,
+  #root button:active, #root a[class*='bg-lime']:active { transform: none; }
 }
