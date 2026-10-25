@@ -161,7 +161,6 @@ button {
   width: min(380px, 85%);
   margin-inline: auto;
   height: 6px;
-  border-radius: 999px;
   background: rgb(var(--color-accent));
   transform: scaleX(0);
   transform-origin: center;
@@ -199,18 +198,85 @@ button {
 .hero-mascot-surge {
   position: absolute;
   inset: -32% -9% 2%;
-  border: 1px solid rgb(var(--color-primary) / 0.14);
-  border-radius: 50%;
+  border: 2px dashed rgb(var(--color-primary) / 0.16);
   opacity: 0;
   animation: hero-mascot-ring 1.25s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.hero-mascot-canvas {
+/* ---- pixel mascot sprites (64x64 base, 2x integer scale, blink sheet) ---- */
+.pixel-sprite {
   position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
+  width: 128px;
+  height: 128px;
+  background-repeat: no-repeat;
+  background-size: 128px 256px;
+  background-position: 0 0;
+  image-rendering: pixelated;
+  transform-origin: 50% 85%;
+}
+
+.ps-mori {
+  left: -1%;
+  top: 4%;
+  background-image: url('/pixel/mori-sheet.png');
+  animation:
+    sprite-bob 4.6s ease-in-out infinite,
+    sprite-blink 5.4s steps(1) 0.8s infinite;
+}
+
+.ps-pip {
+  left: 23%;
+  top: 62%;
+  background-image: url('/pixel/pip-sheet.png');
+  animation:
+    sprite-bob 3.1s ease-in-out -0.9s infinite,
+    sprite-blink 4.2s steps(1) 0.25s infinite;
+}
+
+.ps-koda {
+  right: 23%;
+  top: 62%;
+  background-image: url('/pixel/koda-sheet.png');
+  animation:
+    sprite-bob 5.2s ease-in-out -1.7s infinite,
+    sprite-blink 6.4s steps(1) 1.4s infinite;
+}
+
+.ps-milo {
+  right: -1%;
+  top: 0%;
+  background-image: url('/pixel/milo-sheet.png');
+  animation:
+    sprite-bob 3.8s ease-in-out -2.4s infinite,
+    sprite-blink 4.8s steps(1) 2.1s infinite;
+}
+
+@keyframes sprite-bob {
+  0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+  50% { transform: translateY(-11px) rotate(1.2deg); }
+}
+
+@keyframes sprite-blink {
+  0%, 90% { background-position: 0 0; }
+  91%, 94% { background-position: 0 -128px; }
+  95%, 100% { background-position: 0 0; }
+}
+
+@media (max-width: 640px) {
+  .pixel-sprite {
+    width: 72px;
+    height: 72px;
+    background-size: 72px 144px;
+  }
+  .ps-mori { left: -2%; top: -6%; }
+  .ps-pip { left: 12%; top: 70%; }
+  .ps-koda { right: 12%; top: 70%; }
+  .ps-milo { right: -2%; top: -6%; }
+  @keyframes sprite-blink {
+    0%, 90% { background-position: 0 0; }
+    91%, 94% { background-position: 0 -72px; }
+    95%, 100% { background-position: 0 0; }
+  }
 }
 
 @keyframes hero-mascots-surround {

@@ -2,18 +2,11 @@
 
 > This file is the handoff brief for any AI coding agent continuing the GMDA landing-page mascot work. Read this before changing mascot visuals or behavior.
 
-## Design direction update (2026-10-24, later) — three.js cinematic cast
+## Design direction update (2026-10-25) — PIXEL WEBSITE (current)
 
-The hero mascots are now **real-time 3D web characters on React Three Fiber** (`src/components/HeroMascots.tsx` canvas stage + `src/components/mascots/` per-character components: `Mori.tsx` `<Mori />`, `Pip.tsx` `<Pip />`, `Koda.tsx` `<Koda />`, `Milo.tsx` `<Milo />`), built to match the user's reference lineup art. Architecture:
+The site is now **fully pixel-art styled** (user: "整個網站改成像素風，連mascot也改像素風", explicitly NO three.js / no 3D — the R3F cast was removed). Mascots are the hand-crafted 64×64 sprite system (`scripts/pixel_mascots.py`, `npm run pixel`) rendered in the hero at 2x integer scale with CSS blink (2-frame sheets `public/pixel/{name}-sheet.png`) + per-character bob. Sprite placement/animation lives in `src/index.css` (`.pixel-sprite`, `.ps-mori/pip/koda/milo`, `sprite-bob`, `sprite-blink`).
 
-- `mascots/geometry.ts` — pure sculpted builders (no DOM, headless-smokeable): each body has its OWN deformation language (Mori asymmetric pear + spiral sprout + gold magnifier; Pip 3-point folded star pillow; Koda superellipsoid squircle + twin antennae + laptop; Milo elongated egg + headphones + sweeping radar dish). Shared `makeEyes()` language: deep glossy eyeball + iris/pupil layers + two catchlights + sliding eyelid + brow ridge + socket rim.
-- `mascots/materials.ts` — MeshPhysicalMaterial soft-touch vinyl (roughness ≈ .52 with procedural roughness map, sheen, light clearcoat), dark glossy eye materials, blush, glass lens, pulsing status emissive.
-- `mascots/useMascotIdle.ts` — shared personality engine (breathing/bob/sway/blink/iris-dart toward cursor) + `usePrefersReducedMotion`.
-- `HeroMascots.tsx` — `<Canvas shadows="soft" dpr={[1,2]} gl={{antialias, alpha}}>` + RoomEnvironment PMREM studio IBL + key/fill/rim lights + drei `ContactShadows`/`AdaptiveDpr`/`Preload` + `CameraRig` (fov 32, y 2.3, lookAt 0,1.35,0, worldWidth 9.4 clamp 4.8–12) + `MascotBoundary` (WebGL failure → hidden) + whole-cast cursor lean. Layout: Mori -3.2 / Pip -1.12 / Koda 1.12 / Milo 3.2 (Mori/Milo forward).
-- Colors pinned to the reference: Mori ivory `#f5efe4`, Pip honey `#f3c74e`, Koda sky `#6faef8`, Milo soft lilac `#d9a9e0` (reference is pinker — user spec says lavender; one hex to flip). The reference lineup has a 5th green figure — intentionally NOT part of GMDA's four.
-- Smoke: esbuild `.smoke-entry.ts` → node; asserts pairwise-distinct body geometry (unique-mesh requirement) + counts meshes. `npm run typecheck && npm run lint && npm run build`.
-
-The site brand mark is the new "gmda" wordmark (`public/gmda-logo.png`, favicon `public/gmda-mark.png`). Concept/reference renders stay in the gitignored `concepts/` folder.
+Pixel UI language (`tailwind.config.ts`): font-sans = Pixelify Sans (IBM Plex Mono kept for code/labels), borderRadius all `0`, borderWidth default `2px`, boxShadow = hard offset blocks (never blur). `HeroMascots.tsx` is DOM-only (no WebGL). THREE/R3F deps uninstalled — do not reintroduce 3D unless the user asks again.
 
 ## Brand palette (fixed colors — sampled from the user's palette spec)
 

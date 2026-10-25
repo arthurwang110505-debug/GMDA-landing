@@ -199,6 +199,14 @@ def draw_eye(sp, x, y, w, h, r_look=(0, 0), lid=False):
     sp.set(x + 1 + cx, y + h - 2 + cy, mix(IVORY, INDIGO, 0.45))  # small glint
 
 
+def draw_closed_eye(sp, x, y, w, h, color):
+    """A calm closed lid: flat 2px curve with a tiny lash."""
+    for i in range(w):
+        sp.set(x + i, y + h - 1, color)
+        sp.set(x + i, y + h - 2, mix(color, IVORY, 0.18))
+    sp.set(x + w - 1, y + h, color)
+
+
 def draw_blush(sp, x, y):
     sp.set(x, y, BLUSH)
     sp.set(x + 1, y, BLUSH)
@@ -210,7 +218,7 @@ def draw_blush(sp, x, y):
 # MORI — research. Pear body, spiral sprout, magnifier over one eye (the
 # magnified eye inside the lens = the "discovery" detail).
 # ---------------------------------------------------------------------------
-def build_mori():
+def build_mori(blink=False):
     sp = Sprite()
     r = ramp(MORI)
 
@@ -275,7 +283,7 @@ def build_mori():
 # ---------------------------------------------------------------------------
 # PIP — writing. Irregular star, folded seams, sparks + pencil, biggest eyes.
 # ---------------------------------------------------------------------------
-def build_pip():
+def build_pip(blink=False):
     sp = Sprite()
     r = ramp(PIP)
 
@@ -298,8 +306,12 @@ def build_pip():
     sp.set(11, 28, r["light2"]); sp.set(9, 31, r["light2"])
 
     # face — big sparkly eyes, wide smile
-    draw_eye(sp, 25, 29, 4, 5, r_look=(0, -1))
-    draw_eye(sp, 37, 29, 4, 5, r_look=(0, -1))
+    if blink:
+        draw_closed_eye(sp, 25, 29, 4, 5, mix(PIP, INDIGO, 0.62))
+        draw_closed_eye(sp, 37, 29, 4, 5, mix(PIP, INDIGO, 0.62))
+    else:
+        draw_eye(sp, 25, 29, 4, 5, r_look=(0, -1))
+        draw_eye(sp, 37, 29, 4, 5, r_look=(0, -1))
     sp.set(29, 36, mix(PIP, INDIGO, 0.7)); sp.set(30, 37, mix(PIP, INDIGO, 0.7))
     sp.set(31, 37, mix(PIP, INDIGO, 0.7)); sp.set(32, 37, mix(PIP, INDIGO, 0.7))
     sp.set(33, 37, mix(PIP, INDIGO, 0.7)); sp.set(34, 36, mix(PIP, INDIGO, 0.7))
@@ -322,7 +334,7 @@ def build_pip():
 # ---------------------------------------------------------------------------
 # KODA — coding. Soft square, twin antennae (lime status), laptop, calm eyes.
 # ---------------------------------------------------------------------------
-def build_koda():
+def build_koda(blink=False):
     sp = Sprite()
     r = ramp(KODA)
 
@@ -354,8 +366,12 @@ def build_koda():
     sp.set(19, 20, r["light2"]); sp.set(17, 24, r["light2"]); sp.set(22, 17, r["light1"])
 
     # face — calm half-lidded eyes
-    draw_eye(sp, 25, 28, 3, 4)
-    draw_eye(sp, 37, 28, 3, 4)
+    if blink:
+        draw_closed_eye(sp, 25, 28, 3, 4, mix(KODA, INDIGO, 0.62))
+        draw_closed_eye(sp, 37, 28, 3, 4, mix(KODA, INDIGO, 0.62))
+    else:
+        draw_eye(sp, 25, 28, 3, 4)
+        draw_eye(sp, 37, 28, 3, 4)
     for x in (24, 25, 26, 27):
         sp.set(x, 27, mix(KODA, INDIGO, 0.6))
     for x in (36, 37, 38, 39):
@@ -373,7 +389,7 @@ def build_koda():
 # ---------------------------------------------------------------------------
 # MILO — monitoring. Tall egg, headphones, radar dish sweeping, attentive eyes.
 # ---------------------------------------------------------------------------
-def build_milo():
+def build_milo(blink=False):
     sp = Sprite()
     r = ramp(MILO)
 
@@ -411,8 +427,12 @@ def build_milo():
     sp.set(23, 17, r["light2"]); sp.set(20, 21, r["light2"]); sp.set(18, 27, r["light1"])
 
     # face — attentive glance up-right
-    draw_eye(sp, 26, 30, 3, 4, r_look=(1, -1))
-    draw_eye(sp, 37, 30, 3, 4, r_look=(1, -1))
+    if blink:
+        draw_closed_eye(sp, 26, 30, 3, 4, mix(MILO, INDIGO, 0.62))
+        draw_closed_eye(sp, 37, 30, 3, 4, mix(MILO, INDIGO, 0.62))
+    else:
+        draw_eye(sp, 26, 30, 3, 4, r_look=(1, -1))
+        draw_eye(sp, 37, 30, 3, 4, r_look=(1, -1))
     sp.set(31, 37, mix(MILO, INDIGO, 0.7))
     sp.set(32, 38, mix(MILO, INDIGO, 0.7))
     sp.set(33, 37, mix(MILO, INDIGO, 0.7))
@@ -438,6 +458,11 @@ def save_sprites(out="public/pixel"):
         im = sp.to_image()
         im.save(f"{out}/{name}.png")
         im.resize((32, 32), Image.NEAREST).save(f"{out}/{name}-32.png")
+        blink = fn(blink=True).to_image()
+        sheet = Image.new("RGBA", (64, 128), (0, 0, 0, 0))
+        sheet.alpha_composite(im, (0, 0))
+        sheet.alpha_composite(blink, (0, 64))
+        sheet.save(f"{out}/{name}-sheet.png")
         imgs[name] = im
         print(f"{name}: {sum(1 for row in sp.px for c in row if c)} px")
     return imgs
