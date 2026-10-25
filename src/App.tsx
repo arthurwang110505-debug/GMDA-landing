@@ -194,7 +194,7 @@ function SectionIntro({
           <h2 id={titleId} className={titleClassName}>{title}</h2>
         )}
       </div>
-      <p data-reveal={scrollTitle ? '' : undefined} style={scrollTitle ? revealDelay(140) : undefined} className={`max-w-xl text-[15px] leading-7 lg:justify-self-end ${light ? 'text-[#2A2A55]' : 'text-slate-400'}`}>{description}</p>
+      <p data-reveal={scrollTitle ? '' : undefined} style={scrollTitle ? revealDelay(140) : undefined} className={`max-w-xl text-[15px] leading-7 lg:justify-self-end ${light ? 'text-ink-800' : 'text-slate-400'}`}>{description}</p>
     </div>
   )
 }
@@ -292,8 +292,8 @@ function Features() {
             <div className="mt-8 grid gap-2 sm:grid-cols-3">
               {[
                 ['MA', 'Mara', 'Research', 'bg-lime-300 text-ink-900'],
-                ['SO', 'Sol', 'Writing', 'border border-line/10 bg-[#FFFFFF] text-[#14142B]'],
-                ['KI', 'Kit', 'Review', 'bg-[#FF8F73] text-[#14142B]'],
+                ['SO', 'Sol', 'Writing', 'border border-line/10 bg-white text-ink-900'],
+                ['KI', 'Kit', 'Review', 'bg-rose text-ink-900'],
               ].map(([initials, name, role, color]) => (
                 <div key={name} className="rounded-xl border border-line/[0.07] bg-black/10 p-3 transition-colors group-hover:border-line/[0.11]">
                   <div className="flex items-center gap-2.5">
@@ -440,8 +440,8 @@ function ControlAndPrivacy() {
         <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div data-reveal="">
             <h3 className="text-2xl font-semibold tracking-[-0.035em]">Your computer is the home base.</h3>
-            <p className="mt-5 text-[15px] leading-7 text-[#2A2A55]">GMDA is designed to keep conversations and configuration on your computer. When you use an external model provider, integration, or remote computer, relevant data may leave your device and be handled by that service or environment.</p>
-            <p className="mt-4 text-[15px] leading-7 text-[#2A2A55]">Approvals add a deliberate review point for sensitive actions, depending on your runtime and tool support. They don’t replace sensible provider, permission, and device-security choices.</p>
+            <p className="mt-5 text-[15px] leading-7 text-ink-800">GMDA is designed to keep conversations and configuration on your computer. When you use an external model provider, integration, or remote computer, relevant data may leave your device and be handled by that service or environment.</p>
+            <p className="mt-4 text-[15px] leading-7 text-ink-800">Approvals add a deliberate review point for sensitive actions, depending on your runtime and tool support. They don’t replace sensible provider, permission, and device-security choices.</p>
           </div>
 
           <div data-reveal="" style={revealDelay(120)} className="rounded-2xl border border-ink-900/[0.14] bg-white/40 p-5 shadow-[0_25px_60px_-35px_rgba(20,20,43,0.24)] sm:p-7">
@@ -449,7 +449,7 @@ function ControlAndPrivacy() {
             <div className="grid items-center gap-4 sm:grid-cols-[1fr_auto_1fr]">
               <div className="rounded-xl border border-ink-900/[0.14] bg-paper p-4">
                 <div className="flex items-center gap-2 text-xs font-bold"><Laptop className="h-4 w-4" aria-hidden="true" />Your computer</div>
-                <div className="mt-4 space-y-2.5 text-[10px] text-[#2A2A55]">
+                <div className="mt-4 space-y-2.5 text-[10px] text-ink-800">
                   <div className="flex items-center gap-2"><MessageSquareText className="h-3.5 w-3.5" aria-hidden="true" />Conversations</div>
                   <div className="flex items-center gap-2"><SlidersHorizontal className="h-3.5 w-3.5" aria-hidden="true" />Agent configuration</div>
                   <div className="flex items-center gap-2"><Folder className="h-3.5 w-3.5" aria-hidden="true" />Workspace files</div>
@@ -463,7 +463,7 @@ function ControlAndPrivacy() {
               </div>
               <div className="rounded-xl border border-dashed border-ink-900/25 p-4">
                 <div className="flex items-center gap-2 text-xs font-bold"><Cloud className="h-4 w-4" aria-hidden="true" />External services</div>
-                <div className="mt-4 space-y-2.5 text-[10px] text-[#2A2A55]">
+                <div className="mt-4 space-y-2.5 text-[10px] text-ink-800">
                   <div className="flex items-center gap-2"><Cpu className="h-3.5 w-3.5" aria-hidden="true" />Model providers</div>
                   <div className="flex items-center gap-2"><Plug className="h-3.5 w-3.5" aria-hidden="true" />Connected tools</div>
                   <div className="flex items-center gap-2"><Server className="h-3.5 w-3.5" aria-hidden="true" />Remote computers</div>
@@ -471,7 +471,7 @@ function ControlAndPrivacy() {
                 <div className="mt-4 border-t border-ink-900/10 pt-3 font-mono text-[8px] uppercase tracking-wider text-ink-700">Only when configured</div>
               </div>
             </div>
-            <div className="mt-5 flex items-start gap-2 text-[10px] leading-5 text-[#2A2A55]"><Radio className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />Relevant prompts, files, or action data may cross this boundary when those options are used.</div>
+            <div className="mt-5 flex items-start gap-2 text-[10px] leading-5 text-ink-800"><Radio className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />Relevant prompts, files, or action data may cross this boundary when those options are used.</div>
           </div>
         </div>
 
@@ -486,7 +486,7 @@ function ControlAndPrivacy() {
               <article key={title as string} className="border-b border-ink-900/[0.15] py-7 last:border-b-0 md:border-b-0 md:px-7 md:first:pl-0 md:last:pr-0">
                 <PrincipleIcon className="h-5 w-5 text-ink-700" aria-hidden="true" />
                 <h3 className="mt-5 text-base font-semibold">{title as string}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#2A2A55]">{copy as string}</p>
+                <p className="mt-3 text-sm leading-6 text-ink-800">{copy as string}</p>
               </article>
             )
           })}

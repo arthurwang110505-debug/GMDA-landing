@@ -8,17 +8,21 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty false",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "logo": "node scripts/render-logo.mjs",
+    "pixel": "python3 scripts/pixel_mascots.py && python3 scripts/pixel_sheet.py"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.2.5",
     "@fontsource/ibm-plex-mono": "^5.2.5",
+    "@fontsource/pixelify-sans": "^5.3.0",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/react": "^19.0.3",
     "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react": "^4.3.4",

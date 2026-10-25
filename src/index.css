@@ -4,22 +4,22 @@
 
 :root,
 :root[data-theme='dark'] {
-  --surface-page: 20 20 43;
-  --surface-card: 20 20 43;
-  --surface-layer: 42 42 85;
+  --surface-page: 15 46 53;
+  --surface-card: 22 21 29;
+  --surface-layer: 39 37 51;
   --color-primary: 255 255 255;
-  --color-accent: 200 242 60;
+  --color-accent: 165 222 228;
   --color-line: 255 255 255;
-  --color-approval: 255 240 235;
-  --color-approval-accent: 255 143 115;
+  --color-approval: 238 169 169;
+  --color-approval-accent: 238 169 169;
   --slate-50: 255 255 255;
-  --slate-100: 245 243 236;
-  --slate-200: 232 230 239;
-  --slate-300: 210 207 222;
-  --slate-400: 185 181 201;
-  --slate-500: 170 165 188;
-  --slate-600: 164 159 184;
-  --slate-700: 119 114 141;
+  --slate-100: 246 247 250;
+  --slate-200: 230 245 247;
+  --slate-300: 200 216 222;
+  --slate-400: 170 190 198;
+  --slate-500: 148 168 176;
+  --slate-600: 126 148 158;
+  --slate-700: 96 116 126;
 
   font-family: 'Manrope Variable', Manrope, ui-sans-serif, system-ui, sans-serif;
   color: rgb(var(--color-primary));
@@ -32,22 +32,22 @@
 }
 
 :root[data-theme='light'] {
-  --surface-page: 245 243 236;
+  --surface-page: 246 247 250;
   --surface-card: 255 255 255;
-  --surface-layer: 235 232 224;
-  --color-primary: 20 20 43;
-  --color-accent: 20 20 43;
-  --color-line: 20 20 43;
-  --color-approval: 20 20 43;
-  --color-approval-accent: 130 60 52;
-  --slate-50: 20 20 43;
-  --slate-100: 20 20 43;
-  --slate-200: 42 42 85;
-  --slate-300: 64 61 86;
-  --slate-400: 81 77 100;
-  --slate-500: 90 85 107;
-  --slate-600: 90 85 107;
-  --slate-700: 90 85 107;
+  --surface-layer: 230 245 247;
+  --color-primary: 22 21 29;
+  --color-accent: 31 111 124;
+  --color-line: 22 21 29;
+  --color-approval: 22 21 29;
+  --color-approval-accent: 163 63 73;
+  --slate-50: 22 21 29;
+  --slate-100: 22 21 29;
+  --slate-200: 39 37 51;
+  --slate-300: 70 72 88;
+  --slate-400: 88 92 108;
+  --slate-500: 96 100 116;
+  --slate-600: 96 100 116;
+  --slate-700: 96 100 116;
 
   color-scheme: light;
 }
@@ -74,18 +74,18 @@ button {
 }
 
 ::selection {
-  color: #14142B;
-  background: #C8F23C;
+  color: #16151D;
+  background: #A5DEE4;
 }
 
 :focus-visible {
-  outline: 2px solid #C8F23C;
+  outline: 2px solid #A5DEE4;
   outline-offset: 4px;
 }
 
 .light-section :focus-visible,
 :root[data-theme='light'] :focus-visible {
-  outline-color: #2A2A55;
+  outline-color: #1F6F7C;
 }
 
 @layer components {
@@ -148,7 +148,7 @@ button {
 }
 
 :root[data-theme='light'] .motion-mask-bottom-text {
-  box-shadow: inset 0 -0.09em 0 #C8F23C;
+  box-shadow: inset 0 -0.09em 0 #A5DEE4;
 }
 
 .motion-mask-divider {
@@ -161,7 +161,6 @@ button {
   width: min(380px, 85%);
   margin-inline: auto;
   height: 6px;
-  border-radius: 999px;
   background: rgb(var(--color-accent));
   transform: scaleX(0);
   transform-origin: center;
@@ -170,11 +169,28 @@ button {
     motion-mask-line-shrink 0.25s 2.05s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
+/* theme-aware transparent wordmark (light surfaces get the deep-tone variant) */
+.brand-mark-light {
+  display: none;
+}
+:root[data-theme='light'] .brand-mark-dark {
+  display: none;
+}
+:root[data-theme='light'] .brand-mark-light {
+  display: block;
+}
+.brand-on-light .brand-mark-dark {
+  display: none;
+}
+.brand-on-light .brand-mark-light {
+  display: block;
+}
+
 .hero-mascot-cluster {
   pointer-events: none;
   position: absolute;
   z-index: 3;
-  inset: 0;
+  inset: -11rem -7rem -6rem;
   transform-origin: 50% 60%;
   animation: hero-mascots-surround 1.1s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -182,97 +198,152 @@ button {
 .hero-mascot-surge {
   position: absolute;
   inset: -32% -9% 2%;
-  border: 1px solid rgb(var(--color-accent) / 0.35);
-  border-radius: 50%;
+  border: 2px dashed rgb(var(--color-primary) / 0.16);
   opacity: 0;
   animation: hero-mascot-ring 1.25s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.hero-mascot {
-  --mascot-rotate: 0deg;
+/* ---- big-pixel chrome ---- */
+:root {
+  --pixel-stair: polygon(
+    0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0,
+    calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px)
+  );
+}
+
+/* stepped pixel corners on buttons, chips and panels */
+a[class*="bg-lime-300"],
+button,
+a[class*="min-h-12"][class*="border"],
+[class*="rounded-2xl"],
+[class*="rounded-xl"],
+[class*="rounded-lg"][class*="bg-"] {
+  clip-path: var(--pixel-stair);
+}
+
+/* hard offset shadow via drop-shadow so it survives the clip */
+a[class*="bg-lime-300"],
+button,
+a[class*="min-h-12"][class*="border"],
+[class*="rounded-2xl"],
+[class*="rounded-xl"][class*="shadow-"] {
+  filter: drop-shadow(5px 5px 0 rgba(10, 10, 22, 0.42));
+}
+:root[data-theme='light'] a[class*="bg-lime-300"],
+:root[data-theme='light'] button,
+:root[data-theme='light'] a[class*="min-h-12"][class*="border"],
+:root[data-theme='light'] [class*="rounded-2xl"],
+:root[data-theme='light'] [class*="rounded-xl"][class*="shadow-"] {
+  filter: drop-shadow(5px 5px 0 rgba(22, 21, 29, 0.22));
+}
+
+/* chunky pixel rules */
+header {
+  border-bottom-width: 4px;
+}
+[class*="border-t"] {
+  border-top-width: 3px;
+}
+[class*="border-b"] {
+  border-bottom-width: 3px;
+}
+
+/* inline icons snap to the pixel grid */
+svg {
+  shape-rendering: crispEdges;
+}
+
+/* heading tracking — pixel fonts want their own grid */
+h1, h2, h3 {
+  letter-spacing: 0.01em !important;
+  line-height: 1.08 !important;
+}
+
+/* big-pixel backgrounds */
+.fine-grid {
+  background-image: url('/pixel/tile-dots.png');
+  background-size: 16px 16px;
+}
+.hero-grid {
+  background-image: url('/pixel/tile-checker.png');
+  background-size: 32px 32px;
+}
+.light-section {
+  background-image: url('/pixel/tile-checker-light.png');
+  background-size: 32px 32px;
+}
+
+/* ---- pixel mascot sprites (64x64 base, 2x integer scale, blink sheet) ---- */
+.pixel-sprite {
+  --sprite-scale: 3;
   position: absolute;
-  display: block;
-  width: clamp(2.75rem, 4vw, 3.5rem);
-  aspect-ratio: 1;
-  transform: rotate(var(--mascot-rotate));
+  width: calc(64px * var(--sprite-scale));
+  height: calc(64px * var(--sprite-scale));
+  background-repeat: no-repeat;
+  background-size: calc(64px * var(--sprite-scale)) calc(128px * var(--sprite-scale));
+  background-position: 0 0;
+  image-rendering: pixelated;
+  transform-origin: 50% 85%;
 }
 
-.hero-mascot-interaction {
-  --mascot-react-x: 0px;
-  --mascot-react-y: 0px;
-  --mascot-react-scale: 1;
-  --mascot-react-tilt: 0deg;
-  --mascot-near: 0;
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform: translate3d(var(--mascot-react-x), var(--mascot-react-y), 0) scale(var(--mascot-react-scale)) rotate(var(--mascot-react-tilt));
-  transition: transform 160ms ease-out;
-  will-change: transform;
+.ps-mori {
+  left: -7%;
+  top: -12%;
+  background-image: url('/pixel/mori-sheet.png');
+  animation:
+    sprite-bob 4.6s ease-in-out infinite,
+    sprite-blink 5.4s steps(1) 0.8s infinite;
 }
 
-.hero-mascot-interaction::after {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border: 1px solid rgb(var(--color-accent) / 0.42);
-  border-radius: 50%;
-  opacity: var(--mascot-near);
-  transition: opacity 140ms ease-out;
+.ps-pip {
+  left: 17%;
+  top: 58%;
+  background-image: url('/pixel/pip-sheet.png');
+  animation:
+    sprite-bob 3.1s ease-in-out -0.9s infinite,
+    sprite-blink 4.2s steps(1) 0.25s infinite;
 }
 
-.hero-mascot-float {
-  display: block;
-  width: 100%;
-  height: 100%;
-  animation: hero-mascot-float 7s ease-in-out infinite;
+.ps-koda {
+  right: 17%;
+  top: 58%;
+  background-image: url('/pixel/koda-sheet.png');
+  animation:
+    sprite-bob 5.2s ease-in-out -1.7s infinite,
+    sprite-blink 6.4s steps(1) 1.4s infinite;
 }
 
-.hero-mascot img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 9px 9px rgba(0, 0, 0, 0.22));
-  user-select: none;
+.ps-milo {
+  right: -7%;
+  top: -16%;
+  background-image: url('/pixel/milo-sheet.png');
+  animation:
+    sprite-bob 3.8s ease-in-out -2.4s infinite,
+    sprite-blink 4.8s steps(1) 2.1s infinite;
 }
 
-.hero-mascot-ink {
-  --mascot-rotate: -11deg;
-  bottom: 0.5rem;
-  left: -4rem;
+@keyframes sprite-bob {
+  0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+  50% { transform: translateY(-11px) rotate(1.2deg); }
 }
 
-.hero-mascot-coral {
-  --mascot-rotate: -9deg;
-  top: -4rem;
-  left: 12%;
+@keyframes sprite-blink {
+  0%, 90% { background-position: 0 0; }
+  91%, 94% { background-position: 0 calc(-64px * var(--sprite-scale)); }
+  95%, 100% { background-position: 0 0; }
 }
 
-.hero-mascot-spark {
-  --mascot-rotate: 6deg;
-  top: -4.5rem;
-  left: 50%;
-  transform: translateX(-50%) rotate(var(--mascot-rotate));
+@media (max-width: 640px) {
+  .pixel-sprite {
+    --sprite-scale: 2;
+  }
+  .ps-mori { left: -3%; top: -18%; }
+  .ps-pip { left: 8%; top: 64%; }
+  .ps-koda { right: 8%; top: 64%; }
+  .ps-milo { right: -3%; top: -18%; }
 }
-
-.hero-mascot-blush {
-  --mascot-rotate: 10deg;
-  top: -4rem;
-  right: 12%;
-}
-
-.hero-mascot-lime {
-  --mascot-rotate: 12deg;
-  top: 1rem;
-  right: -4rem;
-}
-
-.hero-mascot-ink .hero-mascot-float { animation-delay: -4.5s; }
-.hero-mascot-coral .hero-mascot-float { animation-delay: -2.2s; }
-.hero-mascot-spark .hero-mascot-float { animation-delay: -1s; }
-.hero-mascot-blush .hero-mascot-float { animation-delay: -3.4s; }
-.hero-mascot-lime .hero-mascot-float { animation-delay: -5.6s; }
 
 @keyframes hero-mascots-surround {
   0% { opacity: 0; transform: scale(0.18) rotate(-7deg); }
@@ -284,31 +355,6 @@ button {
   0% { opacity: 0; transform: scale(0.65); }
   35% { opacity: 0.55; }
   100% { opacity: 0; transform: scale(1.15); }
-}
-
-@keyframes hero-mascot-float {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -6px, 0); }
-}
-
-@media (max-width: 639px) {
-  .hero-mascot {
-    width: 1.75rem;
-  }
-
-  .hero-mascot-ink,
-  .hero-mascot-coral,
-  .hero-mascot-spark,
-  .hero-mascot-blush,
-  .hero-mascot-lime {
-    bottom: auto;
-  }
-
-  .hero-mascot-ink { top: -2.75rem; left: 0; }
-  .hero-mascot-coral { top: -3.5rem; left: 22%; }
-  .hero-mascot-spark { top: -3.75rem; }
-  .hero-mascot-blush { top: -3.5rem; right: 22%; }
-  .hero-mascot-lime { top: -2.75rem; right: 0; }
 }
 
 @keyframes motion-mask-top {
@@ -622,21 +668,11 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-mascot-cluster,
-  .hero-mascot-float {
-    animation: none;
-  }
-
   .hero-mascot-cluster {
+    animation: none !important;
     transform: none;
   }
 
-  .hero-mascot-interaction {
-    transform: none;
-    transition: none;
-  }
-
-  .hero-mascot-interaction::after,
   .hero-mascot-surge {
     display: none;
   }

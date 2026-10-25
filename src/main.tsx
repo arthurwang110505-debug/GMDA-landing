@@ -1,4 +1,6 @@
-import '@fontsource-variable/manrope'
+import '@fontsource/pixelify-sans/400.css'
+import '@fontsource/pixelify-sans/500.css'
+import '@fontsource/pixelify-sans/700.css'
 import '@fontsource/ibm-plex-mono/latin-400.css'
 import '@fontsource/ibm-plex-mono/latin-500.css'
 import { StrictMode } from 'react'

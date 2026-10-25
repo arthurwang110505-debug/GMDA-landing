@@ -80,8 +80,8 @@ function RuntimeVisual() {
 function TeamVisual() {
   const agents = [
     { initials: 'MA', name: 'Mara', role: 'Research lead', trait: 'Curious · methodical', color: 'bg-lime-300 text-ink-900' },
-    { initials: 'SO', name: 'Sol', role: 'Product writer', trait: 'Clear · measured', color: 'border border-line/10 bg-[#FFFFFF] text-[#14142B]' },
-    { initials: 'KI', name: 'Kit', role: 'Release reviewer', trait: 'Precise · skeptical', color: 'bg-[#FF8F73] text-[#14142B]' },
+    { initials: 'SO', name: 'Sol', role: 'Product writer', trait: 'Clear · measured', color: 'border border-line/10 bg-white text-ink-900' },
+    { initials: 'KI', name: 'Kit', role: 'Release reviewer', trait: 'Precise · skeptical', color: 'bg-rose text-ink-900' },
   ]
 
   return (
