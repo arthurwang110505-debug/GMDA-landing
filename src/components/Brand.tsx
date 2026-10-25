@@ -7,7 +7,7 @@ export function Brand({ compact = false, light = false }: BrandProps) {
   return (
     <span className="inline-flex items-center gap-3">
       <img
-        src="/app-icon.svg"
+        src="/gmda-pixel-icon.svg"
         alt=""
         className={compact ? 'h-8 w-8 rounded-[9px]' : 'h-10 w-10 rounded-xl'}
         width={compact ? 32 : 40}

@@ -208,19 +208,19 @@ function Hero() {
       <div className="hero-parallax-grid pointer-events-none absolute inset-0 fine-grid opacity-40" />
       <div className="relative mx-auto max-w-site px-5 py-16 sm:px-8 sm:py-20 lg:py-24 xl:py-28">
         <div className="hero-scroll-copy relative z-10 mx-auto max-w-5xl text-center">
-          <div className="mb-20 flex items-center justify-center gap-3 font-mono sm:mb-24 text-[9px] uppercase tracking-[0.2em] text-accent sm:text-[10px]">
+          <div className="mb-6 flex items-center justify-center gap-3 font-mono sm:mb-8 text-[9px] uppercase tracking-[0.2em] text-accent sm:text-[10px]">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime-300 opacity-30" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-lime-300" />
             </span>
             An independent agent workspace
           </div>
+          <HeroMascots />
           <h1 id="hero-title" aria-label="Your AI team. Your control." className="relative text-balance text-[clamp(3.2rem,8vw,6.75rem)] font-semibold leading-[0.99] tracking-[-0.06em] text-primary">
             <span className="relative mx-auto block w-fit">
               <span className="motion-mask-frame block">
                 <span className="motion-mask-top-text block">Your AI team.</span>
               </span>
-              <HeroMascots />
             </span>
             <span className="motion-mask-divider" aria-hidden="true" />
             <span className="motion-mask-frame mt-2 block text-accent">
@@ -501,7 +501,7 @@ function FinalCta() {
     <section className="bg-surface-page px-5 pb-20 pt-4 sm:px-8 sm:pb-24" aria-labelledby="cta-title">
       <div data-reveal="" className="relative mx-auto max-w-site overflow-hidden rounded-[1.75rem] border border-accent/20 bg-surface-layer px-6 py-14 sm:px-10 sm:py-16 lg:px-16 lg:py-20">
         <div className="absolute inset-0 fine-grid opacity-40" />
-        <img src="/app-icon.svg" alt="" className="absolute -right-16 -top-24 h-[380px] w-[380px] rotate-12 opacity-[0.055] sm:h-[480px] sm:w-[480px]" />
+        <img src="/gmda-pixel-icon.svg" alt="" className="absolute -right-16 -top-24 h-[380px] w-[380px] rotate-12 opacity-[0.055] sm:h-[480px] sm:w-[480px]" />
         <div className="relative max-w-2xl">
           <div className="mb-6 flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.2em] text-accent"><Bot className="h-4 w-4" aria-hidden="true" />Your workspace is yours to shape</div>
           <h2 id="cta-title" className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.05em] text-primary sm:text-5xl lg:text-6xl">Give your AI team a place to call home.</h2>

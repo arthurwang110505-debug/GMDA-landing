@@ -80,3 +80,18 @@ The privacy copy distinguishes local-first workspace storage from external model
 - License: <https://github.com/arthurwang110505-debug/GMDA-bot/blob/main/LICENSE>
 
 Built on the open-source core of OpenMausBot. GMDA is independent and is not affiliated with xAI, Meta, OpenAI, or the OpenMausBot maintainer.
+
+## Pixel mascot prototype
+
+Mori (Research), Pip (Writing), Koda (Coding), and Milo (Monitoring) are sparse,
+12×12 colour-block creatures. The Hero uses the shared `PixelMascot` renderer;
+product-preview agent content has not yet been migrated.
+
+- Preview playground: `/mascot-lab.html`
+- Canonical tile maps: `src/data/mascot-maps.json`
+- Character metadata: `src/data/mascots.ts`
+- Regenerate standalone SVG/PNG assets: `npm run mascots:build`
+- Updated scope and next steps: `docs/PIXEL_MASCOT_REFACTOR_PLAN.md`
+
+The original app-icon file is retained, but page references currently use the
+provisional four-colour `public/gmda-pixel-icon.svg` instead of the old robot.

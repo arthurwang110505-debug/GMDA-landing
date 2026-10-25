@@ -53,6 +53,10 @@ export default {
         },
         paper: '#F5F3EC',
       },
+      borderRadius: {
+        DEFAULT: '0', sm: '0', md: '0', lg: '0', xl: '0',
+        '2xl': '0', '3xl': '0', full: '0',
+      },
       fontFamily: {
         sans: ['Manrope Variable', 'Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
@@ -61,7 +65,7 @@ export default {
         site: '80rem',
       },
       boxShadow: {
-        window: '0 40px 100px -30px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(200, 242, 60, 0.04)',
+        window: '8px 8px 0 rgb(var(--color-accent) / 0.18)',
       },
     },
   },
